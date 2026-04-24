@@ -1,0 +1,12 @@
+{
+  "name": "matholic-exam",
+  "version": "1.0.0",
+  "private": true,
+  "description": "매쓰홀릭 시험대비 프로토타입 - AI 수학 시험 예측 시스템",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
