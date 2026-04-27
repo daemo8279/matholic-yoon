@@ -336,6 +336,37 @@ input:focus,select:focus{border-color:var(--p2)}
 .cam-options{display:flex;gap:8px;margin-top:12px}
 .cam-opt-btn{flex:1;padding:10px;border:1.5px solid var(--g3);border-radius:8px;background:var(--g0);font-size:12px;font-weight:600;color:var(--g7);cursor:pointer}
 .cam-opt-btn.ghost{color:var(--p2);border-color:var(--p2)}
+
+/* ========= 다중 사진 갤러리 ========= */
+.gal-hd{display:flex;align-items:center;justify-content:space-between;margin-top:14px;margin-bottom:10px}
+.gal-hd-l{font-size:13px;font-weight:700;color:var(--g8)}
+.gal-hd-r{font-size:11px;color:var(--g5);font-weight:500}
+.gal-hd-r b{color:var(--p1);font-weight:700}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.gal-tile{aspect-ratio:3/4;border-radius:9px;overflow:hidden;position:relative;background:var(--g1);border:1.5px solid var(--g1);cursor:pointer;transition:transform .12s}
+.gal-tile:active{transform:scale(.96)}
+.gal-tile img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-tile-num{position:absolute;top:5px;left:5px;background:var(--p2);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;line-height:1.4;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.gal-tile-x{position:absolute;top:4px;right:4px;width:22px;height:22px;border:none;background:rgba(0,0,0,.65);color:#fff;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;font-weight:300}
+.gal-tile-x:hover{background:var(--danger)}
+.gal-tile-arrows{position:absolute;bottom:4px;left:4px;right:4px;display:flex;gap:3px;justify-content:space-between}
+.gal-tile-arrow{flex:1;height:20px;background:rgba(0,0,0,.55);color:#fff;border:none;border-radius:4px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
+.gal-tile-arrow:disabled{opacity:.3;cursor:not-allowed}
+.gal-tile-arrow:not(:disabled):hover{background:var(--p2)}
+.gal-add{aspect-ratio:3/4;border-radius:9px;border:2px dashed var(--g3);background:var(--g0);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:var(--g5);font-size:11px;gap:4px;font-weight:600;transition:all .12s}
+.gal-add:hover:not(:disabled){border-color:var(--p2);color:var(--p2);background:var(--p5)}
+.gal-add:disabled{opacity:.4;cursor:not-allowed}
+.gal-add-ic{font-size:24px;line-height:1}
+.gal-empty{aspect-ratio:3/4;border-radius:9px;background:var(--g1);display:flex;align-items:center;justify-content:center;color:var(--g3);font-size:18px}
+.gal-warn{font-size:11px;color:#B45309;background:#FEF3C7;border:1px solid #FDE68A;border-radius:7px;padding:8px 11px;margin-bottom:10px;line-height:1.45}
+.gal-actions{display:flex;gap:8px;margin-top:6px}
+.gal-actions .btn-fill{flex:2;padding:13px}
+.gal-actions .btn-ghost{flex:1;padding:13px}
+.cam-batch-result{padding:14px;border-radius:10px;margin-top:14px;font-size:13px;line-height:1.5}
+.cam-batch-result.success{background:var(--p5);color:var(--p1);border:1px solid var(--p2)}
+.cam-batch-result.fail{background:var(--danger-l);color:var(--danger);border:1px solid var(--danger)}
+.cam-batch-stat{display:flex;gap:14px;margin-top:8px;font-size:11px;font-weight:600}
+.cam-batch-stat-item{display:flex;align-items:center;gap:4px}
 .cam-result{padding:14px;border-radius:10px;margin-top:10px;font-size:13px;line-height:1.5}
 .cam-result.success{background:var(--p5);color:var(--p1);border:1px solid var(--p2)}
 .cam-result.fail{background:var(--danger-l);color:var(--danger);border:1px solid var(--danger)}
@@ -800,25 +831,40 @@ input:focus,select:focus{border-color:var(--p2)}
       <button class="modal-x" onclick="closeCameraModal()">×</button>
     </div>
     <div class="modal-bd">
-      <div class="cam-stage" id="cam-stage">
-        <div class="cam-corner tl"></div><div class="cam-corner tr"></div>
-        <div class="cam-corner bl"></div><div class="cam-corner br"></div>
-        <video id="cam-video" autoplay playsinline muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none"></video>
-        <img id="cam-photo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:none" alt="">
-        <div class="cam-msg" id="cam-msg">
-          <div class="cam-icon">📷</div>
-          카메라를 준비하고 있어요...
+      <!-- 카메라 뷰 (촬영 중일 때만 표시) -->
+      <div id="cam-camera-view">
+        <div class="cam-stage" id="cam-stage">
+          <div class="cam-corner tl"></div><div class="cam-corner tr"></div>
+          <div class="cam-corner bl"></div><div class="cam-corner br"></div>
+          <video id="cam-video" autoplay playsinline muted style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none"></video>
+          <div class="cam-msg" id="cam-msg">
+            <div class="cam-icon">📷</div>
+            카메라를 준비하고 있어요...
+          </div>
         </div>
-      </div>
-      <canvas id="cam-canvas" style="display:none"></canvas>
-      <div id="cam-action">
+        <canvas id="cam-canvas" style="display:none"></canvas>
         <div class="cam-shutter" onclick="takePhoto()" id="cam-shutter-btn"><div class="cam-shutter-inner"></div></div>
         <div class="cam-options">
-          <button class="cam-opt-btn" onclick="document.getElementById('cam-file-input').click()">📁 파일 선택</button>
+          <button class="cam-opt-btn" onclick="document.getElementById('cam-file-input').click()">📁 갤러리에서 선택</button>
           <button class="cam-opt-btn ghost" onclick="switchCamera()" id="cam-switch-btn">🔄 카메라 전환</button>
         </div>
-        <input type="file" id="cam-file-input" accept="image/*" style="display:none" onchange="handleFileInput(event)">
+        <input type="file" id="cam-file-input" accept="image/*" multiple style="display:none" onchange="handleFileInput(event)">
       </div>
+
+      <!-- 갤러리 (촬영한 사진들) -->
+      <div id="cam-gallery-section">
+        <div class="gal-hd">
+          <span class="gal-hd-l">📷 촬영한 페이지</span>
+          <span class="gal-hd-r"><b id="gal-count">0</b> / 6장</span>
+        </div>
+        <div class="gal-warn" id="gal-warn" style="display:none"></div>
+        <div class="gal-grid" id="gal-grid"></div>
+        <div class="gal-actions" id="gal-actions" style="display:none">
+          <button class="btn-fill" onclick="startBatchAnalysis()" id="gal-analyze-btn">📤 모든 페이지 분석하기</button>
+          <button class="btn-ghost" onclick="resetGallery()">초기화</button>
+        </div>
+      </div>
+
       <div id="cam-result"></div>
     </div>
   </div>
@@ -944,24 +990,33 @@ function goToReportFromDash(){
 
 // ========== 내 시험지 분석 ==========
 async function renderAnalysisScreen(){
-  // 업로드 이미지 표시
-  const thumb = document.getElementById('analy-img-thumb');
-  if (uploadedImageDataUrl) {
-    thumb.src = uploadedImageDataUrl;
-    thumb.style.display = 'block';
+  // 업로드된 시험지 이미지들 표시
+  const cached = getPaperAnalysis();
+  const imgBox = document.getElementById('analy-img-box');
+  const imagesArr = (cached && cached.images) ? cached.images : (uploadedImageDataUrl ? [uploadedImageDataUrl] : []);
+
+  if (imagesArr.length > 0) {
+    const imgsHtml = imagesArr.map((src, i) =>
+      `<div style="display:inline-block;position:relative;margin:0 4px 6px">
+        <img src="${src}" class="analy-img-thumb" alt="페이지 ${i+1}" style="max-height:180px">
+        <div style="position:absolute;top:5px;left:5px;background:var(--p2);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px">${i+1}p</div>
+      </div>`
+    ).join('');
+    imgBox.innerHTML = `
+      <div style="overflow-x:auto;white-space:nowrap;padding:4px 0">${imgsHtml}</div>
+      <div class="analy-img-cap">📷 업로드한 시험지 (${imagesArr.length}페이지)</div>`;
   } else {
-    thumb.style.display = 'none';
+    imgBox.style.display = 'none';
   }
 
   const list = document.getElementById('analy-list');
-  const cached = getPaperAnalysis();
   // 이미 분석된 결과가 있으면 바로 표시
   if (cached && cached.questions && cached.questions.length) {
     renderAnalysisQuestions(cached.questions);
     return;
   }
   // 업로드된 이미지가 없으면 안내
-  if (!uploadedImageDataUrl) {
+  if (imagesArr.length === 0) {
     list.innerHTML = `
       <div class="analy-loading">
         <div style="font-size:36px;margin-bottom:10px">📷</div>
@@ -974,24 +1029,22 @@ async function renderAnalysisScreen(){
   list.innerHTML = `
     <div class="analy-loading">
       <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <div class="analy-loading-text">AI가 시험지를 분석하고 있어요</div>
-      <div class="analy-loading-sub">문제별 정답과 해설을 추출 중이에요 (15~30초)</div>
+      <div class="analy-loading-text">AI가 ${imagesArr.length}페이지를 분석하고 있어요</div>
+      <div class="analy-loading-sub">문제별 정답과 해설을 추출 중이에요 (최대 1분)</div>
     </div>`;
 
   try {
     const res = await fetch('/api/analyze-paper', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ image: uploadedImageDataUrl })
+      body: JSON.stringify({ images: imagesArr })
     });
     const data = await res.json();
     if (!res.ok || !data.questions) throw new Error(data.error || '분석 실패');
-    // 캐시 저장
     const existing = getPaperAnalysis() || {};
     setPaperAnalysis({ ...existing, questions: data.questions });
     renderAnalysisQuestions(data.questions);
   } catch (err) {
-    // API가 아직 없거나 실패 시 → 데모 데이터로 표시 (프로토타입 fallback)
     console.warn('Paper analysis API 실패, 데모 데이터로 폴백:', err);
     const demoQuestions = generateDemoPaperQuestions();
     setPaperAnalysis({ questions: demoQuestions, isDemo: true });
@@ -1335,19 +1388,21 @@ document.addEventListener('click',e=>{
   }
 });
 
-// ========== Camera Modal (실제 카메라 + Claude API) ==========
+// ========== Camera Modal (실제 카메라 + 다중 페이지 + Claude API) ==========
 let camStream = null;
-let camFacingMode = 'environment'; // 'environment' (후면) / 'user' (전면)
+let camFacingMode = 'environment';
+const MAX_PAGES = 6;
+let galleryImages = []; // 촬영/선택한 이미지들의 dataURL 배열
 
 function openCameraModal(){
   // UI 초기화
   document.getElementById('cam-result').innerHTML='';
-  document.getElementById('cam-action').style.display='block';
-  document.getElementById('cam-photo').style.display='none';
-  document.getElementById('cam-video').style.display='none';
+  document.getElementById('cam-camera-view').style.display='block';
   document.getElementById('cam-msg').innerHTML=`<div class="cam-icon">📷</div>카메라를 준비하고 있어요...`;
   document.getElementById('cam-msg').style.display='block';
   document.getElementById('cam-stage').style.background='#1a1a1a';
+  // 갤러리 상태 복원
+  renderGallery();
   openModal('m-camera');
   startCamera();
 }
@@ -1358,7 +1413,6 @@ function closeCameraModal(){
 }
 
 async function startCamera(){
-  // 기존 스트림 정리
   stopCamera();
   try {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -1383,7 +1437,8 @@ async function startCamera(){
     if (err.name === 'NotAllowedError') msg = '카메라 권한이 거부되었어요.<br>브라우저 설정에서 권한을 허용해주세요.';
     else if (err.name === 'NotFoundError') msg = '사용 가능한 카메라가 없어요';
     else if (err.message) msg = err.message;
-    document.getElementById('cam-msg').innerHTML = `<div class="cam-icon">⚠️</div>${msg}<br><br><button class="btn-ghost" style="width:auto;padding:8px 16px;font-size:12px" onclick="document.getElementById('cam-file-input').click()">파일에서 선택</button>`;
+    document.getElementById('cam-msg').innerHTML = `<div class="cam-icon">⚠️</div>${msg}<br><br><button class="btn-ghost" style="width:auto;padding:8px 16px;font-size:12px" onclick="document.getElementById('cam-file-input').click()">갤러리에서 선택</button>`;
+    document.getElementById('cam-msg').style.display = 'block';
   }
 }
 
@@ -1401,14 +1456,18 @@ async function switchCamera(){
   await startCamera();
 }
 
+// 사진 촬영 → 갤러리에 추가
 function takePhoto(){
+  if (galleryImages.length >= MAX_PAGES) {
+    showGalleryWarn(`최대 ${MAX_PAGES}장까지만 업로드할 수 있어요`);
+    return;
+  }
   const video = document.getElementById('cam-video');
   if (!camStream || !video.videoWidth) {
     alert('카메라가 준비되지 않았어요. 잠시 후 다시 시도해주세요.');
     return;
   }
   const canvas = document.getElementById('cam-canvas');
-  // 너무 큰 이미지는 4MB 제한 걸리므로 적당히 리사이즈 (긴 변 1600px)
   const MAX = 1600;
   let w = video.videoWidth, h = video.videoHeight;
   if (w > MAX || h > MAX){
@@ -1416,79 +1475,184 @@ function takePhoto(){
     w = Math.round(w*ratio); h = Math.round(h*ratio);
   }
   canvas.width = w; canvas.height = h;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, w, h);
+  canvas.getContext('2d').drawImage(video, 0, 0, w, h);
   const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-  showCapturedPhoto(dataUrl);
-  analyzeImage(dataUrl);
+  galleryImages.push(dataUrl);
+  renderGallery();
+  showShutterFeedback();
 }
 
+// 파일 선택 (다중 파일 지원)
 function handleFileInput(event){
-  const file = event.target.files?.[0];
-  if (!file) return;
-  if (!file.type.startsWith('image/')) {
-    alert('이미지 파일만 업로드할 수 있어요');
+  const files = event.target.files;
+  if (!files || files.length === 0) return;
+  const remaining = MAX_PAGES - galleryImages.length;
+  if (remaining <= 0) {
+    showGalleryWarn(`최대 ${MAX_PAGES}장까지만 업로드할 수 있어요`);
+    event.target.value = '';
     return;
   }
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    // 파일도 크기 제한 위해 canvas로 리사이즈
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.getElementById('cam-canvas');
-      const MAX = 1600;
-      let w = img.width, h = img.height;
-      if (w > MAX || h > MAX){
-        const ratio = Math.min(MAX/w, MAX/h);
-        w = Math.round(w*ratio); h = Math.round(h*ratio);
-      }
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      showCapturedPhoto(dataUrl);
-      analyzeImage(dataUrl);
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
+  const filesToProcess = Array.from(files).slice(0, remaining);
+  if (files.length > remaining) {
+    showGalleryWarn(`${files.length}장 중 ${remaining}장만 추가됐어요 (최대 ${MAX_PAGES}장 제한)`);
+  }
+  // 모든 파일을 비동기로 처리한 후 한 번에 갤러리 업데이트
+  Promise.all(filesToProcess.map(file => {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith('image/')) { resolve(null); return; }
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.getElementById('cam-canvas');
+          const MAX = 1600;
+          let w = img.width, h = img.height;
+          if (w > MAX || h > MAX){
+            const ratio = Math.min(MAX/w, MAX/h);
+            w = Math.round(w*ratio); h = Math.round(h*ratio);
+          }
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        img.onerror = () => resolve(null);
+        img.src = e.target.result;
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  })).then(results => {
+    results.filter(r => r !== null).forEach(url => galleryImages.push(url));
+    renderGallery();
+    event.target.value = '';
+  });
 }
 
-function showCapturedPhoto(dataUrl){
+// 셔터 피드백 (잠깐 화면 깜빡임)
+function showShutterFeedback(){
+  const stage = document.getElementById('cam-stage');
+  if (!stage) return;
+  const flash = document.createElement('div');
+  flash.style.cssText = 'position:absolute;inset:0;background:#fff;opacity:.7;pointer-events:none;z-index:5';
+  stage.appendChild(flash);
+  setTimeout(() => {
+    flash.style.transition = 'opacity .3s';
+    flash.style.opacity = '0';
+    setTimeout(() => flash.remove(), 320);
+  }, 50);
+}
+
+// 경고 메시지 표시
+function showGalleryWarn(msg){
+  const warn = document.getElementById('gal-warn');
+  warn.textContent = '⚠️ ' + msg;
+  warn.style.display = 'block';
+  setTimeout(() => { warn.style.display = 'none'; }, 4000);
+}
+
+// 갤러리 렌더링
+function renderGallery(){
+  const grid = document.getElementById('gal-grid');
+  const count = galleryImages.length;
+  document.getElementById('gal-count').textContent = count;
+
+  // 분석 시작 버튼 표시 여부
+  document.getElementById('gal-actions').style.display = count > 0 ? 'flex' : 'none';
+
+  // 타일들
+  let html = '';
+  galleryImages.forEach((src, i) => {
+    const isFirst = i === 0;
+    const isLast = i === galleryImages.length - 1;
+    html += `
+      <div class="gal-tile">
+        <img src="${src}" alt="페이지 ${i+1}">
+        <div class="gal-tile-num">${i+1}</div>
+        <button class="gal-tile-x" onclick="removeGalleryImage(${i})" title="삭제">×</button>
+        <div class="gal-tile-arrows">
+          <button class="gal-tile-arrow" onclick="moveGalleryImage(${i},-1)" ${isFirst?'disabled':''} title="앞으로">‹</button>
+          <button class="gal-tile-arrow" onclick="moveGalleryImage(${i},1)" ${isLast?'disabled':''} title="뒤로">›</button>
+        </div>
+      </div>`;
+  });
+  // 추가 버튼 (최대치 미만일 때만)
+  if (count < MAX_PAGES) {
+    html += `
+      <button class="gal-add" onclick="document.getElementById('cam-file-input').click()">
+        <div class="gal-add-ic">＋</div>
+        <div>추가</div>
+      </button>`;
+  }
+  // 빈 칸 채우기 (3칸 그리드 정렬용 - 첫줄만)
+  if (count === 0) {
+    for (let i = 0; i < 2; i++) {
+      html += `<div class="gal-empty">·</div>`;
+    }
+  }
+  grid.innerHTML = html;
+}
+
+// 갤러리에서 이미지 삭제
+function removeGalleryImage(idx){
+  galleryImages.splice(idx, 1);
+  renderGallery();
+}
+
+// 갤러리 순서 변경 (앞으로/뒤로)
+function moveGalleryImage(idx, direction){
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= galleryImages.length) return;
+  [galleryImages[idx], galleryImages[newIdx]] = [galleryImages[newIdx], galleryImages[idx]];
+  renderGallery();
+}
+
+// 갤러리 전체 초기화
+function resetGallery(){
+  if (galleryImages.length > 0 && !confirm('촬영한 모든 사진을 삭제할까요?')) return;
+  galleryImages = [];
+  renderGallery();
+  document.getElementById('cam-result').innerHTML = '';
+}
+
+// 모든 페이지 분석 시작
+async function startBatchAnalysis(){
+  if (galleryImages.length === 0) {
+    alert('먼저 시험지 사진을 촬영해주세요');
+    return;
+  }
+
+  // 카메라 정지 + 카메라 뷰 숨기고 진행 표시
   stopCamera();
-  document.getElementById('cam-video').style.display = 'none';
-  const photo = document.getElementById('cam-photo');
-  photo.src = dataUrl;
-  photo.style.display = 'block';
-  document.getElementById('cam-msg').style.display = 'none';
-  document.getElementById('cam-action').style.display = 'none';
-}
+  document.getElementById('cam-camera-view').style.display = 'none';
+  document.getElementById('gal-actions').style.display = 'none';
 
-async function analyzeImage(dataUrl){
-  // 분석 중 UI
   document.getElementById('cam-result').innerHTML = `
-    <div style="background:var(--g1);border-radius:10px;padding:14px;margin-top:10px;text-align:center">
-      <div class="dots" style="margin:0 0 8px 0"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <div style="font-size:13px;color:var(--g7);font-weight:600">AI가 시험지를 분석하고 있어요...</div>
-      <div style="font-size:11px;color:var(--g5);margin-top:4px">최대 30초 정도 걸릴 수 있어요</div>
+    <div style="background:var(--g1);border-radius:10px;padding:18px 14px;text-align:center">
+      <div class="dots" style="margin:0 0 10px 0"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div style="font-size:13px;color:var(--g7);font-weight:700;margin-bottom:4px">AI가 ${galleryImages.length}페이지를 분석하고 있어요</div>
+      <div style="font-size:11px;color:var(--g5)">최대 1분까지 걸릴 수 있어요</div>
     </div>`;
 
   try {
     const response = await fetch('/api/analyze-exam', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: dataUrl })
+      body: JSON.stringify({ images: galleryImages })
     });
 
     const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || '분석 실패');
-    }
+    if (!response.ok) throw new Error(data.error || '분석 실패');
 
     if (data.isMathExam) {
-      // 수학 시험지 인식 성공 - 분석 정보 저장
+      // 분석 정보 저장
       const existing = getPaperAnalysis() || {};
-      setPaperAnalysis({ ...existing, info: data.info, confidence: data.confidence });
+      setPaperAnalysis({
+        ...existing,
+        info: data.info,
+        confidence: data.confidence,
+        images: galleryImages,
+        pageCount: galleryImages.length
+      });
       const info = data.info || {};
       const infoLines = [];
       if (info.schoolName) infoLines.push(info.schoolName);
@@ -1501,48 +1665,60 @@ async function analyzeImage(dataUrl){
         : '';
 
       document.getElementById('cam-result').innerHTML = `
-        <div class="cam-result success">
+        <div class="cam-batch-result success">
           ✅ <b>수학 시험지가 인식되었어요!</b><br>
           <span style="font-size:12px">${infoText}</span>
           <span style="font-size:11px;color:var(--p1);margin-left:6px">(신뢰도 ${data.confidence}%)</span>
+          <div class="cam-batch-stat">
+            <span class="cam-batch-stat-item">📄 ${galleryImages.length}페이지 분석</span>
+          </div>
           ${topicsText}
         </div>
         <button class="btn-fill" style="margin-top:10px" onclick="confirmUpload()">이 시험지로 분석 시작</button>
-        <button class="btn-ghost" style="margin-top:8px" onclick="openCameraModal()">다시 촬영</button>`;
+        <button class="btn-ghost" style="margin-top:8px" onclick="reopenCameraView()">사진 다시 찍기</button>`;
     } else {
-      // 수학 시험지가 아님
       document.getElementById('cam-result').innerHTML = `
-        <div class="cam-result fail">
+        <div class="cam-batch-result fail">
           ⚠️ <b>${data.message || '수학 시험지를 업로드 해주세요.'}</b><br>
           <span style="font-size:12px">수학 시험지가 잘 보이게 다시 촬영해주세요.</span>
         </div>
-        <button class="btn-fill" style="margin-top:10px" onclick="openCameraModal()">다시 촬영하기</button>
+        <button class="btn-fill" style="margin-top:10px" onclick="reopenCameraView()">다시 촬영하기</button>
         <button class="btn-ghost" style="margin-top:8px" onclick="closeCameraModal()">취소</button>`;
     }
   } catch (err) {
     console.error('분석 오류:', err);
     document.getElementById('cam-result').innerHTML = `
-      <div class="cam-result fail">
+      <div class="cam-batch-result fail">
         ❌ <b>분석 중 오류가 발생했어요</b><br>
         <span style="font-size:12px">${err.message || '잠시 후 다시 시도해주세요'}</span>
       </div>
-      <button class="btn-fill" style="margin-top:10px" onclick="openCameraModal()">다시 시도</button>
-      <button class="btn-ghost" style="margin-top:8px" onclick="closeCameraModal()">취소</button>`;
+      <button class="btn-fill" style="margin-top:10px" onclick="startBatchAnalysis()">다시 시도</button>
+      <button class="btn-ghost" style="margin-top:8px" onclick="reopenCameraView()">사진 수정</button>`;
   }
 }
 
+// 카메라 뷰 다시 열기 (갤러리는 유지)
+function reopenCameraView(){
+  document.getElementById('cam-result').innerHTML = '';
+  document.getElementById('cam-camera-view').style.display = 'block';
+  document.getElementById('gal-actions').style.display = galleryImages.length > 0 ? 'flex' : 'none';
+  startCamera();
+}
+
 function confirmUpload(){
-  document.getElementById('upload-msg').textContent='✓ 시험지 업로드 완료';
-  document.getElementById('upload-zone').style.borderColor='var(--p2)';
-  document.getElementById('upload-zone').style.background='var(--p5)';
-  // 업로드된 이미지를 메모리에 보관 (시험지 분석 화면에서 사용)
-  const photo = document.getElementById('cam-photo');
-  if (photo && photo.src && photo.src.startsWith('data:')) {
-    uploadedImageDataUrl = photo.src;
-    // 분석 정보도 같이 저장 (이전 cam-result에서 받은 info가 있다면)
-    const existing = getPaperAnalysis() || {};
-    setPaperAnalysis({ ...existing, image: uploadedImageDataUrl, uploadedAt: Date.now() });
-  }
+  document.getElementById('upload-msg').textContent = `✓ ${galleryImages.length}페이지 업로드 완료`;
+  document.getElementById('upload-zone').style.borderColor = 'var(--p2)';
+  document.getElementById('upload-zone').style.background = 'var(--p5)';
+  // 다중 페이지 모두 LocalStorage에 보관
+  uploadedImageDataUrl = galleryImages[0]; // 대시보드 썸네일용으로 첫 페이지
+  const existing = getPaperAnalysis() || {};
+  setPaperAnalysis({
+    ...existing,
+    images: [...galleryImages],
+    image: galleryImages[0],
+    pageCount: galleryImages.length,
+    uploadedAt: Date.now()
+  });
   closeCameraModal();
 }
 
