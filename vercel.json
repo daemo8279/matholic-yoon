@@ -3,6 +3,9 @@
   "functions": {
     "api/analyze-exam.js": {
       "maxDuration": 30
+    },
+    "api/analyze-paper.js": {
+      "maxDuration": 60
     }
   }
 }
