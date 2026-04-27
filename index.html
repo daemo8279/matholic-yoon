@@ -37,6 +37,93 @@ button{font-family:inherit;-webkit-appearance:none;appearance:none}
 /* 터치 영역 최소 44px 보장 */
 .opt,.rc-head,.unit-hdr,.cell,.dot,.soc-btn,.btn-fill,.btn-ghost{min-height:32px}
 .btn-fill,.btn-ghost,.start-btn{touch-action:manipulation}
+
+/* ========= Dashboard (시험 홈) ========= */
+.dash-hero{background:linear-gradient(135deg,var(--p2) 0%,var(--p1) 100%);color:#fff;padding:1.4rem 1.25rem 1.6rem}
+.dash-greet{font-size:13px;opacity:.9;margin-bottom:4px}
+.dash-name{font-size:20px;font-weight:800;margin-bottom:14px}
+.dash-exam-card{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:13px;backdrop-filter:blur(8px)}
+.dash-exam-school{font-size:11px;opacity:.85;margin-bottom:3px}
+.dash-exam-name{font-size:14px;font-weight:700;margin-bottom:7px}
+.dash-exam-meta{display:flex;gap:5px;flex-wrap:wrap}
+.dash-exam-chip{font-size:10px;padding:3px 8px;border-radius:10px;background:rgba(255,255,255,.22);font-weight:600}
+
+.dash-section{padding:1.1rem 1.25rem;background:var(--g1)}
+.dash-sec-ttl{font-size:13px;font-weight:700;color:var(--g8);margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.dash-actions{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.dash-action{background:var(--g0);border:1px solid var(--g1);border-radius:13px;padding:14px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:transform .1s;border-left:3px solid var(--p2);text-align:left;width:100%}
+.dash-action:active{transform:scale(.98)}
+.dash-action-ic{width:42px;height:42px;border-radius:11px;background:var(--p5);color:var(--p1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.dash-action-body{flex:1;min-width:0}
+.dash-action-ttl{font-size:14px;font-weight:700;color:var(--g9);margin-bottom:2px;line-height:1.3}
+.dash-action-sub{font-size:11px;color:var(--g5);line-height:1.4}
+.dash-action-arrow{color:var(--g3);font-size:18px;flex-shrink:0}
+.dash-action.mock{border-left-color:#F5A623}
+.dash-action.mock .dash-action-ic{background:#FFF7E0;color:#B45309}
+.dash-action.report{border-left-color:#7C3AED}
+.dash-action.report .dash-action-ic{background:#F3E8FF;color:#6D28D9}
+
+.dash-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;background:var(--g0);border-radius:13px;padding:14px 8px;border:1px solid var(--g1)}
+.dash-stat-cell{text-align:center}
+.dash-stat-cell+.dash-stat-cell{border-left:1px solid var(--g1)}
+.dash-stat-num{font-size:18px;font-weight:800;color:var(--p1);margin-bottom:2px;font-variant-numeric:tabular-nums}
+.dash-stat-lbl{font-size:10px;color:var(--g5);font-weight:600}
+
+/* ========= 내 시험지 분석 ========= */
+.sub-hd{background:var(--g0);padding:11px 1.25rem;border-bottom:1px solid var(--g1);display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:20;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.sub-back{background:none;border:none;font-size:20px;color:var(--g7);cursor:pointer;padding:4px;line-height:1}
+.sub-ttl{font-size:15px;font-weight:700;color:var(--g9);flex:1}
+.analy-img-box{background:var(--g1);padding:14px 1.25rem;text-align:center}
+.analy-img-thumb{max-width:100%;max-height:220px;border-radius:8px;border:1px solid var(--g3);box-shadow:0 3px 10px rgba(0,0,0,.08);cursor:pointer}
+.analy-img-cap{font-size:10px;color:var(--g5);margin-top:6px}
+.analy-list{padding:1rem 1.25rem;background:var(--g0)}
+.analy-q-card{background:var(--g0);border:1.5px solid var(--g1);border-radius:11px;padding:13px;margin-bottom:9px}
+.analy-q-card.loading{background:var(--g1);border-style:dashed;text-align:center;color:var(--g5);font-size:12px;padding:18px}
+.analy-q-num{display:inline-block;background:var(--p2);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;margin-right:6px;vertical-align:middle}
+.analy-q-text{font-size:13px;color:var(--g9);font-weight:600;line-height:1.5;margin-bottom:9px}
+.analy-q-ans{display:flex;align-items:center;gap:8px;background:var(--p5);padding:7px 10px;border-radius:6px;margin-bottom:7px}
+.analy-q-ans-lbl{font-size:10px;color:var(--p1);font-weight:700}
+.analy-q-ans-val{font-size:13px;color:var(--g9);font-weight:700}
+.analy-q-exp{background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:9px 10px;font-size:12px;color:var(--g8);line-height:1.6}
+.analy-q-exp-hdr{font-size:10px;font-weight:700;color:#92400E;margin-bottom:3px}
+.analy-loading{text-align:center;padding:40px 20px;color:var(--g5)}
+.analy-loading .dots{justify-content:center;margin:0 0 12px}
+.analy-loading-text{font-size:13px;font-weight:600;color:var(--g7);margin-bottom:4px}
+.analy-loading-sub{font-size:11px;color:var(--g5)}
+
+/* ========= 모의고사 회차 리스트 ========= */
+.mock-wrap{padding:1.25rem;background:var(--g1);min-height:calc(100vh - 60px)}
+.mock-intro{background:linear-gradient(135deg,var(--p2) 0%,var(--p1) 100%);color:#fff;border-radius:14px;padding:16px;margin-bottom:14px}
+.mock-intro-ttl{font-size:16px;font-weight:800;margin-bottom:4px}
+.mock-intro-sub{font-size:11px;opacity:.9;line-height:1.5}
+.mock-prog-wrap{margin-top:12px}
+.mock-prog-bar{height:5px;background:rgba(255,255,255,.25);border-radius:3px;overflow:hidden}
+.mock-prog-fill{height:100%;background:#fff;border-radius:3px;transition:width .4s}
+.mock-prog-text{font-size:10px;margin-top:5px;display:flex;justify-content:space-between;opacity:.95}
+.mock-card{background:var(--g0);border-radius:12px;padding:13px;margin-bottom:8px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:transform .1s;border:1px solid var(--g1)}
+.mock-card:active{transform:scale(.98)}
+.mock-card.locked{opacity:.55;cursor:not-allowed;background:#FAFAFA}
+.mock-card.done{background:linear-gradient(to right,#F0FDF4 0%,var(--g0) 60%);border-color:#BBF7D0}
+.mock-num-box{width:42px;height:42px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;font-weight:700}
+.mock-num-box.next{background:var(--p2);color:#fff}
+.mock-num-box.done{background:var(--p5);color:var(--p1)}
+.mock-num-box.locked{background:var(--g1);color:var(--g5)}
+.mock-num-box-lbl{font-size:9px;font-weight:600;line-height:1}
+.mock-num-box-num{font-size:16px;font-weight:800;line-height:1.1}
+.mock-card-body{flex:1;min-width:0}
+.mock-card-ttl{font-size:13px;font-weight:700;color:var(--g9);margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mock-card-meta{font-size:10px;color:var(--g5);line-height:1.4}
+.mock-diff-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;white-space:nowrap}
+.diff-1{background:#DBEAFE;color:#1E40AF}
+.diff-2{background:#D1FAE5;color:#065F46}
+.diff-3{background:#FEF3C7;color:#92400E}
+.diff-4{background:#FED7AA;color:#9A3412}
+.diff-5{background:#FECACA;color:#991B1B}
+.mock-score{font-size:14px;font-weight:800;color:var(--p1);text-align:right;flex-shrink:0;line-height:1.1}
+.mock-score-lbl{font-size:9px;color:var(--g5);font-weight:600}
+.mock-card-arrow{color:var(--g3);font-size:16px;flex-shrink:0}
+.mock-ai-tip{background:var(--g0);border:1px dashed var(--p3);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11px;color:var(--g7);line-height:1.5}
+.mock-ai-tip-hdr{font-size:11px;font-weight:700;color:var(--p1);margin-bottom:3px;display:flex;align-items:center;gap:4px}
 .screen{display:none}.screen.active{display:block}
 .tb18{font-size:18px;font-weight:700;color:var(--g9)}.tb16{font-size:16px;font-weight:700;color:var(--g9)}
 .sb14{font-size:14px;font-weight:600;color:var(--g9)}.m14{font-size:14px;font-weight:500;color:var(--g8)}
@@ -363,6 +450,102 @@ input:focus,select:focus{border-color:var(--p2)}
   </div>
 </div>
 
+<!-- DASHBOARD (시험 홈 - 분석 완료 후 이동) -->
+<div id="s-dash" class="screen">
+  <div class="dash-hero">
+    <div class="dash-greet">안녕하세요 👋</div>
+    <div class="dash-name">매쓰홀릭 학생</div>
+    <div class="dash-exam-card" id="dash-exam-info">
+      <div class="dash-exam-school">매쓰중학교</div>
+      <div class="dash-exam-name">중학교 1학년 1학기 · 중간고사</div>
+      <div class="dash-exam-meta">
+        <span class="dash-exam-chip">📷 시험지 분석 완료</span>
+        <span class="dash-exam-chip" id="dash-exam-qcount">10문항</span>
+      </div>
+    </div>
+  </div>
+  <div class="dash-section">
+    <div class="dash-sec-ttl">📚 학습 메뉴</div>
+    <div class="dash-actions">
+      <button class="dash-action" onclick="goToAnalysis()">
+        <div class="dash-action-ic">📝</div>
+        <div class="dash-action-body">
+          <div class="dash-action-ttl">내 시험지 분석 보기</div>
+          <div class="dash-action-sub">업로드한 시험지의 정답과 해설을 AI가 분석해드려요</div>
+        </div>
+        <div class="dash-action-arrow">›</div>
+      </button>
+      <button class="dash-action mock" onclick="goTo('s-mock-list')">
+        <div class="dash-action-ic">🎯</div>
+        <div class="dash-action-body">
+          <div class="dash-action-ttl">예측 모의고사 응시</div>
+          <div class="dash-action-sub">학교 시험과 유사한 모의고사 1~10회</div>
+        </div>
+        <div class="dash-action-arrow">›</div>
+      </button>
+      <button class="dash-action report" onclick="goToReportFromDash()" id="dash-report-btn" style="display:none">
+        <div class="dash-action-ic">📊</div>
+        <div class="dash-action-body">
+          <div class="dash-action-ttl">학습 보고서</div>
+          <div class="dash-action-sub">유형별 이해도 분석 + 쌍둥이 문항</div>
+        </div>
+        <div class="dash-action-arrow">›</div>
+      </button>
+    </div>
+    <div class="dash-sec-ttl">📈 학습 현황</div>
+    <div class="dash-stat-row">
+      <div class="dash-stat-cell">
+        <div class="dash-stat-num" id="dash-stat-done">0</div>
+        <div class="dash-stat-lbl">응시 회차</div>
+      </div>
+      <div class="dash-stat-cell">
+        <div class="dash-stat-num" id="dash-stat-avg">-</div>
+        <div class="dash-stat-lbl">평균 점수</div>
+      </div>
+      <div class="dash-stat-cell">
+        <div class="dash-stat-num" id="dash-stat-best">-</div>
+        <div class="dash-stat-lbl">최고 점수</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 내 시험지 분석 화면 -->
+<div id="s-analy" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="goTo('s-dash')">‹</button>
+    <div class="sub-ttl">내 시험지 분석</div>
+  </div>
+  <div class="analy-img-box" id="analy-img-box">
+    <img id="analy-img-thumb" class="analy-img-thumb" alt="업로드한 시험지" style="display:none">
+    <div class="analy-img-cap">📷 업로드한 시험지 원본</div>
+  </div>
+  <div class="analy-list" id="analy-list"></div>
+</div>
+
+<!-- 모의고사 회차 선택 -->
+<div id="s-mock-list" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="goTo('s-dash')">‹</button>
+    <div class="sub-ttl">예측 모의고사</div>
+  </div>
+  <div class="mock-wrap">
+    <div class="mock-intro">
+      <div class="mock-intro-ttl">🎯 AI 적응형 모의고사</div>
+      <div class="mock-intro-sub">매 회차마다 새로운 10문항을 AI가 생성해요.<br>이전 회차 점수와 약점 단원을 분석해 난이도가 자동 조정됩니다.</div>
+      <div class="mock-prog-wrap">
+        <div class="mock-prog-bar"><div class="mock-prog-fill" id="mock-prog-fill" style="width:0%"></div></div>
+        <div class="mock-prog-text"><span id="mock-prog-label">아직 응시한 회차가 없어요</span><span id="mock-prog-count">0 / 10</span></div>
+      </div>
+    </div>
+    <div class="mock-ai-tip" id="mock-ai-tip">
+      <div class="mock-ai-tip-hdr">💡 AI 추천</div>
+      <div id="mock-ai-tip-text">1회차부터 시작해보세요. 첫 시험은 기본 난이도로 출제됩니다.</div>
+    </div>
+    <div id="mock-list"></div>
+  </div>
+</div>
+
 <!-- EXAM START (full-screen 시험 시작) -->
 <div id="s-start" class="screen">
   <div class="start-stage">
@@ -474,7 +657,7 @@ input:focus,select:focus{border-color:var(--p2)}
         <div style="text-align:right"><div style="font-size:12px;color:var(--g5)">목표까지</div><div style="font-size:28px;font-weight:700;color:var(--g9);margin-top:4px" id="g-tgt">-</div></div>
       </div>
     </div>
-    <button class="btn-fill" onclick="goTo('s-login')">처음으로 돌아가기</button>
+    <button class="btn-fill" onclick="goTo('s-dash')">시험 홈으로 돌아가기</button>
   </div>
 </div>
 
@@ -686,6 +869,323 @@ function goTo(id){
   if(id==='s-exam') renderExam();
   if(id==='s-results') showResults();
   if(id==='s-report') showReport();
+  if(id==='s-dash') renderDashboard();
+  if(id==='s-analy') renderAnalysisScreen();
+  if(id==='s-mock-list') renderMockList();
+}
+
+// ========== 시험 데이터 저장소 (LocalStorage) ==========
+const MOCK_KEY='matholic_mock_history_v1';
+const PAPER_KEY='matholic_paper_analysis_v1';
+
+function getMockHistory(){
+  try{ return JSON.parse(localStorage.getItem(MOCK_KEY)||'[]'); }
+  catch(e){ return []; }
+}
+function setMockHistory(arr){
+  try{ localStorage.setItem(MOCK_KEY,JSON.stringify(arr)); }catch(e){}
+}
+function getPaperAnalysis(){
+  try{ return JSON.parse(localStorage.getItem(PAPER_KEY)||'null'); }
+  catch(e){ return null; }
+}
+function setPaperAnalysis(data){
+  try{ localStorage.setItem(PAPER_KEY,JSON.stringify(data)); }catch(e){}
+}
+
+// 업로드한 시험지 이미지 보관 (분석 결과와 함께)
+let uploadedImageDataUrl = null;
+// 현재 응시 중인 모의고사 회차 (1~10)
+let currentMockRound = null;
+
+// ========== 대시보드 ==========
+function renderDashboard(){
+  const history = getMockHistory();
+  const done = history.filter(h => h && h.score !== undefined).length;
+  document.getElementById('dash-stat-done').textContent = done;
+  if (done > 0) {
+    const scores = history.filter(h => h && h.score !== undefined).map(h => h.score);
+    const avg = Math.round(scores.reduce((a,b)=>a+b,0) / scores.length);
+    const best = Math.max(...scores);
+    document.getElementById('dash-stat-avg').textContent = avg;
+    document.getElementById('dash-stat-best').textContent = best;
+  } else {
+    document.getElementById('dash-stat-avg').textContent = '-';
+    document.getElementById('dash-stat-best').textContent = '-';
+  }
+  // 보고서 버튼은 한 번이라도 시험을 봤으면 표시
+  document.getElementById('dash-report-btn').style.display = done > 0 ? 'flex' : 'none';
+
+  // 업로드된 시험지 정보 갱신
+  const paper = getPaperAnalysis();
+  if (paper && paper.info) {
+    const info = paper.info;
+    const lines = [];
+    if (info.schoolName) lines.push(info.schoolName);
+    if (info.grade) lines.push(info.grade);
+    if (info.examType) lines.push(info.examType);
+    if (lines.length) document.querySelector('#dash-exam-info .dash-exam-name').textContent = lines.join(' · ');
+    if (info.questionCount) document.getElementById('dash-exam-qcount').textContent = info.questionCount + '문항';
+  }
+}
+
+function goToAnalysis(){
+  goTo('s-analy');
+}
+function goToReportFromDash(){
+  // 가장 최근 모의고사 결과로 보고서 표시
+  const history = getMockHistory();
+  const last = history.filter(h => h && h.score !== undefined).pop();
+  if (!last) { goTo('s-mock-list'); return; }
+  // 마지막 응시한 답안 복원
+  if (last.userAnswers) UA = last.userAnswers;
+  goTo('s-report');
+}
+
+// ========== 내 시험지 분석 ==========
+async function renderAnalysisScreen(){
+  // 업로드 이미지 표시
+  const thumb = document.getElementById('analy-img-thumb');
+  if (uploadedImageDataUrl) {
+    thumb.src = uploadedImageDataUrl;
+    thumb.style.display = 'block';
+  } else {
+    thumb.style.display = 'none';
+  }
+
+  const list = document.getElementById('analy-list');
+  const cached = getPaperAnalysis();
+  // 이미 분석된 결과가 있으면 바로 표시
+  if (cached && cached.questions && cached.questions.length) {
+    renderAnalysisQuestions(cached.questions);
+    return;
+  }
+  // 업로드된 이미지가 없으면 안내
+  if (!uploadedImageDataUrl) {
+    list.innerHTML = `
+      <div class="analy-loading">
+        <div style="font-size:36px;margin-bottom:10px">📷</div>
+        <div class="analy-loading-text">업로드된 시험지가 없어요</div>
+        <div class="analy-loading-sub">시험 정보 입력 화면에서 시험지를 먼저 촬영해주세요</div>
+      </div>`;
+    return;
+  }
+  // 분석 진행
+  list.innerHTML = `
+    <div class="analy-loading">
+      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="analy-loading-text">AI가 시험지를 분석하고 있어요</div>
+      <div class="analy-loading-sub">문제별 정답과 해설을 추출 중이에요 (15~30초)</div>
+    </div>`;
+
+  try {
+    const res = await fetch('/api/analyze-paper', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ image: uploadedImageDataUrl })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.questions) throw new Error(data.error || '분석 실패');
+    // 캐시 저장
+    const existing = getPaperAnalysis() || {};
+    setPaperAnalysis({ ...existing, questions: data.questions });
+    renderAnalysisQuestions(data.questions);
+  } catch (err) {
+    // API가 아직 없거나 실패 시 → 데모 데이터로 표시 (프로토타입 fallback)
+    console.warn('Paper analysis API 실패, 데모 데이터로 폴백:', err);
+    const demoQuestions = generateDemoPaperQuestions();
+    setPaperAnalysis({ questions: demoQuestions, isDemo: true });
+    renderAnalysisQuestions(demoQuestions);
+  }
+}
+
+function generateDemoPaperQuestions(){
+  // 프로토타입용 데모 데이터 (실제 API 연결 전까지)
+  return QS.map(q => ({
+    num: q.id,
+    text: q.text,
+    answer: q.type === 'mc' ? `${NN[q.ans]} ${q.opts[q.ans]}` : q.ans,
+    explanation: q.exp
+  }));
+}
+
+function renderAnalysisQuestions(questions){
+  const cached = getPaperAnalysis();
+  const isDemo = cached && cached.isDemo;
+  const demoNotice = isDemo ? `
+    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:#92400E;line-height:1.5">
+      ⚠️ 실제 시험지 분석 API가 아직 연결되지 않아 <b>예시 데이터</b>를 표시합니다.<br>API 연결 후에는 업로드한 시험지의 실제 문제별 분석 결과가 표시됩니다.
+    </div>` : '';
+  const html = demoNotice + questions.map(q => `
+    <div class="analy-q-card">
+      <div class="analy-q-text">
+        <span class="analy-q-num">${q.num}번</span>
+        ${q.text}
+      </div>
+      <div class="analy-q-ans">
+        <span class="analy-q-ans-lbl">정답</span>
+        <span class="analy-q-ans-val">${q.answer}</span>
+      </div>
+      <div class="analy-q-exp">
+        <div class="analy-q-exp-hdr">💡 해설</div>
+        ${q.explanation}
+      </div>
+    </div>`).join('');
+  document.getElementById('analy-list').innerHTML = html;
+}
+
+// ========== 모의고사 회차 리스트 + 적응형 난이도 ==========
+const MOCK_TOTAL = 10;
+
+// 적응형 난이도 계산 (1~5 단계, 0.5 단위 가능)
+function calcAdaptiveDifficulty(history, round){
+  if (round === 1) return 3.0; // 1회차는 항상 기본 난이도
+  // 직전 회차 결과
+  const prev = history[round - 2]; // 0-indexed, round-1번째 = index round-2
+  if (!prev || prev.score === undefined) return 3.0;
+  // 이전 난이도
+  const prevDiff = prev.difficulty || 3.0;
+  // 점수 기반 조정
+  let delta = 0;
+  if (prev.score >= 90) delta = +1.0;
+  else if (prev.score >= 70) delta = 0;
+  else if (prev.score >= 50) delta = -0.5;
+  else delta = -1.0;
+  let newDiff = prevDiff + delta;
+  // 1.0 ~ 5.0 범위로 클램프
+  newDiff = Math.max(1.0, Math.min(5.0, newDiff));
+  return Math.round(newDiff * 2) / 2; // 0.5 단위로 반올림
+}
+
+function diffLabel(d){
+  if (d <= 1.5) return { label: '🟦 매우 쉬움', cls: 'diff-1' };
+  if (d <= 2.5) return { label: '🟩 쉬움', cls: 'diff-2' };
+  if (d <= 3.5) return { label: '🟨 보통', cls: 'diff-3' };
+  if (d <= 4.5) return { label: '🟧 어려움', cls: 'diff-4' };
+  return { label: '🟥 매우 어려움', cls: 'diff-5' };
+}
+
+function getNextRecommendedRound(history){
+  // 응시하지 않은 가장 작은 번호
+  for (let i = 1; i <= MOCK_TOTAL; i++) {
+    if (!history[i-1] || history[i-1].score === undefined) return i;
+  }
+  return null; // 다 풀었음
+}
+
+function getAITip(history, nextRound){
+  if (!nextRound) return '🎉 모든 회차를 완료했어요! 보고서로 학습 결과를 확인해보세요.';
+  if (nextRound === 1) return '1회차부터 시작해보세요. 첫 시험은 기본 난이도(보통)로 출제됩니다.';
+  const prev = history[nextRound - 2];
+  if (!prev || prev.score === undefined) return `${nextRound}회차로 바로 응시할 수 있어요.`;
+  const score = prev.score;
+  if (score >= 90) return `🔥 ${nextRound-1}회차 ${score}점! 잘하셨어요. ${nextRound}회차는 난이도를 한 단계 올려서 도전해보세요.`;
+  if (score >= 70) return `👍 ${nextRound-1}회차 ${score}점! 안정적인 점수예요. ${nextRound}회차도 비슷한 난이도로 진행됩니다.`;
+  if (score >= 50) return `💪 ${nextRound-1}회차 ${score}점. ${nextRound}회차는 조금 쉽게 출제해서 자신감을 회복할 거예요.`;
+  return `🌱 ${nextRound-1}회차 ${score}점. 기초가 더 필요한 것 같아요. ${nextRound}회차는 기본기 위주로 출제됩니다.`;
+}
+
+function renderMockList(){
+  const history = getMockHistory();
+  const nextRound = getNextRecommendedRound(history);
+  const doneCount = history.filter(h => h && h.score !== undefined).length;
+
+  // 진행률 표시
+  document.getElementById('mock-prog-fill').style.width = (doneCount / MOCK_TOTAL * 100) + '%';
+  document.getElementById('mock-prog-count').textContent = `${doneCount} / ${MOCK_TOTAL}`;
+  document.getElementById('mock-prog-label').textContent =
+    doneCount === 0 ? '아직 응시한 회차가 없어요' :
+    doneCount === MOCK_TOTAL ? '🎉 모든 회차 응시 완료!' :
+    `${doneCount}회 완료, ${MOCK_TOTAL - doneCount}회 남았어요`;
+
+  // AI 추천 메시지
+  document.getElementById('mock-ai-tip-text').textContent = getAITip(history, nextRound);
+
+  // 카드 리스트
+  const cards = [];
+  for (let i = 1; i <= MOCK_TOTAL; i++) {
+    const record = history[i-1];
+    const isDone = record && record.score !== undefined;
+    const isNext = (i === nextRound);
+    const isLocked = !isDone && !isNext;
+    // 난이도: 응시했으면 record.difficulty, 다음 응시 회차면 계산, 잠긴 회차는 미리 계산
+    let diff;
+    if (isDone) diff = record.difficulty || 3.0;
+    else if (isNext) diff = calcAdaptiveDifficulty(history, i);
+    else diff = null; // 잠금 상태
+
+    const diffInfo = diff ? diffLabel(diff) : null;
+    let cardClass = 'mock-card';
+    if (isDone) cardClass += ' done';
+    if (isLocked) cardClass += ' locked';
+    let numBoxClass = isDone ? 'done' : isNext ? 'next' : 'locked';
+    let onclick = isLocked ? '' : `onclick="startMockRound(${i})"`;
+
+    let rightSide;
+    if (isDone) {
+      rightSide = `<div class="mock-score">${record.score}<span style="font-size:10px;color:var(--g5)">점</span><div class="mock-score-lbl">${record.dateLabel||''}</div></div><div class="mock-card-arrow">›</div>`;
+    } else if (isNext) {
+      rightSide = `<div style="font-size:10px;color:var(--p2);font-weight:700;text-align:right">응시 가능<div style="font-size:9px;color:var(--g5);font-weight:500;margin-top:2px">탭하여 시작</div></div><div class="mock-card-arrow">›</div>`;
+    } else {
+      rightSide = `<div style="font-size:14px;color:var(--g3)">🔒</div>`;
+    }
+
+    const titleParts = [`${i}회차`];
+    if (isDone) titleParts.push('<span style="font-size:10px;color:var(--p1);font-weight:600">✓ 완료</span>');
+    if (isNext) titleParts.push('<span style="font-size:10px;color:#F5A623;font-weight:700">← 다음 응시</span>');
+
+    cards.push(`
+      <div class="${cardClass}" ${onclick}>
+        <div class="mock-num-box ${numBoxClass}">
+          <div class="mock-num-box-lbl">제</div>
+          <div class="mock-num-box-num">${i}</div>
+        </div>
+        <div class="mock-card-body">
+          <div class="mock-card-ttl">${titleParts.join(' ')}</div>
+          <div class="mock-card-meta">
+            ${diffInfo ? `<span class="mock-diff-tag ${diffInfo.cls}">${diffInfo.label}</span>` : '<span style="color:var(--g5)">이전 회차 응시 후 잠금 해제</span>'}
+            ${isDone ? `<span style="margin-left:6px">10문항</span>` : isNext ? `<span style="margin-left:6px">10문항 · 30분</span>` : ''}
+          </div>
+        </div>
+        ${rightSide}
+      </div>`);
+  }
+  document.getElementById('mock-list').innerHTML = cards.join('');
+}
+
+function startMockRound(round){
+  currentMockRound = round;
+  const history = getMockHistory();
+  const diff = calcAdaptiveDifficulty(history, round);
+  // 난이도에 맞게 문항 생성 (현재 프로토는 기존 QS 재사용 + 난이도 표시)
+  // 실제 서비스에서는 여기서 Claude API로 새 문항 생성 호출
+  // 응시 시작 화면(s-start)으로 이동 (회차/난이도 정보 표시)
+  goToMockStart(round, diff);
+}
+
+function goToMockStart(round, diff){
+  // s-start 화면을 동적으로 갱신
+  const diffInfo = diffLabel(diff);
+  const startEl = document.getElementById('s-start');
+  // 기존 start-stage 내용 갱신
+  startEl.innerHTML = `
+    <div class="start-stage">
+      <div class="start-school">매쓰중학교 · 적응형 모의고사</div>
+      <div class="start-title">${round}회차 모의고사</div>
+      <div class="start-meta">
+        <span class="start-chip">${diffInfo.label}</span>
+        <span class="start-chip">10문항 · 100점</span>
+      </div>
+      <div class="start-info-box">
+        <div class="start-info-row"><span class="start-info-l">회차</span><span class="start-info-v">${round} / 10</span></div>
+        <div class="start-info-row"><span class="start-info-l">AI 적응 난이도</span><span class="start-info-v">${diff.toFixed(1)} / 5.0</span></div>
+        <div class="start-info-row"><span class="start-info-l">총 문항 / 배점</span><span class="start-info-v">10문항 / 100점</span></div>
+        <div class="start-info-row"><span class="start-info-l">제한 시간</span><span class="start-info-v">30분</span></div>
+      </div>
+      <button class="start-btn" onclick="startExam()">시험 시작 ›</button>
+      <div class="start-tip">${getAITip(getMockHistory(), round).replace(/^[^\s]+ /, '')}</div>
+    </div>`;
+  goTo('s-start');
 }
 
 // ========== Modal helpers ==========
@@ -986,7 +1486,9 @@ async function analyzeImage(dataUrl){
     }
 
     if (data.isMathExam) {
-      // 수학 시험지 인식 성공
+      // 수학 시험지 인식 성공 - 분석 정보 저장
+      const existing = getPaperAnalysis() || {};
+      setPaperAnalysis({ ...existing, info: data.info, confidence: data.confidence });
       const info = data.info || {};
       const infoLines = [];
       if (info.schoolName) infoLines.push(info.schoolName);
@@ -1033,6 +1535,14 @@ function confirmUpload(){
   document.getElementById('upload-msg').textContent='✓ 시험지 업로드 완료';
   document.getElementById('upload-zone').style.borderColor='var(--p2)';
   document.getElementById('upload-zone').style.background='var(--p5)';
+  // 업로드된 이미지를 메모리에 보관 (시험지 분석 화면에서 사용)
+  const photo = document.getElementById('cam-photo');
+  if (photo && photo.src && photo.src.startsWith('data:')) {
+    uploadedImageDataUrl = photo.src;
+    // 분석 정보도 같이 저장 (이전 cam-result에서 받은 info가 있다면)
+    const existing = getPaperAnalysis() || {};
+    setPaperAnalysis({ ...existing, image: uploadedImageDataUrl, uploadedAt: Date.now() });
+  }
   closeCameraModal();
 }
 
@@ -1077,7 +1587,7 @@ function doAnalysis(){
   setIC('ic3','spin');document.getElementById('an4').style.opacity='.3';document.getElementById('an5').style.opacity='.3';
   setTimeout(()=>{setIC('ic3','done');document.getElementById('tx3').textContent='예측 문항 생성 완료';document.getElementById('an4').style.opacity='1';setIC('ic4','spin');},1600);
   setTimeout(()=>{setIC('ic4','done');document.getElementById('an5').style.opacity='1';setIC('ic5','spin');},3000);
-  setTimeout(()=>{setIC('ic5','done');goTo('s-start');},4200);
+  setTimeout(()=>{setIC('ic5','done');goTo('s-dash');},4200);
 }
 
 function chk(q,ua){
@@ -1108,10 +1618,32 @@ function pick(qi,oi){
 function submitExam(){
   stopTimer();
   QS.forEach((q,i)=>{if(q.type==='sh'){const el=document.getElementById(`si${i}`);if(el) UA[i]=el.value.replace(/\s/g,'').toLowerCase();}});
+  // 모의고사 회차 응시였다면 결과 저장
+  if (currentMockRound) {
+    let score = 0;
+    QS.forEach((q,i) => { if (chk(q, UA[i])) score += q.pts; });
+    const history = getMockHistory();
+    const diff = calcAdaptiveDifficulty(history, currentMockRound);
+    const now = new Date();
+    const dateLabel = `${now.getMonth()+1}/${now.getDate()}`;
+    history[currentMockRound - 1] = {
+      round: currentMockRound,
+      score: score,
+      difficulty: diff,
+      userAnswers: [...UA],
+      completedAt: Date.now(),
+      dateLabel: dateLabel
+    };
+    setMockHistory(history);
+  }
   goTo('s-results');
 }
 
-function resetExam(){UA=new Array(10).fill(null);goTo('s-start');}
+function resetExam(){
+  UA = new Array(10).fill(null);
+  currentMockRound = null;
+  goTo('s-dash');
+}
 
 let resultFilter='all';
 let cardExpanded={}; // {qIdx: bool}
