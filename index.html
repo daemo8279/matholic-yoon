@@ -8,6 +8,12 @@
 <meta name="theme-color" content="#00BF6F">
 <meta name="format-detection" content="telephone=no">
 <title>매쓰홀릭 시험대비</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+</script>
 <style>
 :root{--p1:#1A8A4A;--p2:#00BF6F;--p3:#3DD68C;--p5:#C5F5E2;--g9:#1A1A1A;--g8:#333333;--g7:#4D4D4D;--g5:#999999;--g3:#CCCCCC;--g1:#F2F2F2;--g0:#FFFFFF;--danger:#FF4D4D;--danger-l:#FFE8E8;--font-sans:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretendard','Noto Sans KR','Malgun Gothic',sans-serif;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -455,8 +461,8 @@ input:focus,select:focus{border-color:var(--p2)}
       <div class="fl" style="margin-bottom:8px">내 시험지 업로드 <span style="color:var(--g5);font-weight:400">(선택)</span></div>
       <div class="upload-zone" id="upload-zone" onclick="openCameraModal()">
         <div class="uicon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-        <div class="m14" id="upload-msg">시험지 사진을 촬영해주세요</div>
-        <div class="cr12" style="margin-top:3px">카메라로 촬영 또는 파일 업로드</div>
+        <div class="m14" id="upload-msg">시험지를 촬영하거나 PDF로 업로드</div>
+        <div class="cr12" style="margin-top:3px">📷 카메라 · 🖼️ 사진 · 📄 PDF · 최대 6장</div>
       </div>
     </div>
     <button class="btn-fill" onclick="goTo('s-analyzing')">AI 분석 시작</button>
@@ -845,10 +851,12 @@ input:focus,select:focus{border-color:var(--p2)}
         <canvas id="cam-canvas" style="display:none"></canvas>
         <div class="cam-shutter" onclick="takePhoto()" id="cam-shutter-btn"><div class="cam-shutter-inner"></div></div>
         <div class="cam-options">
-          <button class="cam-opt-btn" onclick="document.getElementById('cam-file-input').click()">📁 갤러리에서 선택</button>
-          <button class="cam-opt-btn ghost" onclick="switchCamera()" id="cam-switch-btn">🔄 카메라 전환</button>
+          <button class="cam-opt-btn" onclick="document.getElementById('cam-file-input').click()">🖼️ 사진 선택</button>
+          <button class="cam-opt-btn" onclick="document.getElementById('cam-pdf-input').click()">📄 PDF 선택</button>
+          <button class="cam-opt-btn ghost" onclick="switchCamera()" id="cam-switch-btn">🔄 전환</button>
         </div>
         <input type="file" id="cam-file-input" accept="image/*" multiple style="display:none" onchange="handleFileInput(event)">
+        <input type="file" id="cam-pdf-input" accept="application/pdf,.pdf" style="display:none" onchange="handlePdfInput(event)">
       </div>
 
       <!-- 갤러리 (촬영한 사진들) -->
@@ -1540,6 +1548,95 @@ function showShutterFeedback(){
     flash.style.opacity = '0';
     setTimeout(() => flash.remove(), 320);
   }, 50);
+}
+
+// PDF 파일 처리 - PDF.js로 각 페이지를 이미지로 변환 후 갤러리에 추가
+async function handlePdfInput(event){
+  const file = event.target.files?.[0];
+  if (!file) return;
+  event.target.value = ''; // 같은 파일 재선택 가능하게
+  if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+    showGalleryWarn('PDF 파일만 선택해주세요');
+    return;
+  }
+  // PDF.js 라이브러리 확인
+  if (typeof pdfjsLib === 'undefined') {
+    showGalleryWarn('PDF 라이브러리 로드 실패. 페이지를 새로고침해주세요');
+    return;
+  }
+  // 파일 크기 체크 (50MB 이하)
+  if (file.size > 50 * 1024 * 1024) {
+    showGalleryWarn('PDF 파일이 너무 커요 (50MB 이하)');
+    return;
+  }
+
+  // 진행 표시
+  const grid = document.getElementById('gal-grid');
+  const origGridHTML = grid.innerHTML;
+  grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--g7);font-size:13px">
+    <div class="dots" style="justify-content:center;margin:0 0 10px"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    PDF를 이미지로 변환하고 있어요...
+  </div>`;
+
+  try {
+    // PDF 파일을 ArrayBuffer로 읽기
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const totalPages = pdf.numPages;
+
+    // 페이지 수 제한 체크
+    const remaining = MAX_PAGES - galleryImages.length;
+    if (remaining <= 0) {
+      showGalleryWarn(`이미 ${MAX_PAGES}장이 추가되어 있어요. 더 추가하려면 일부 삭제해주세요`);
+      grid.innerHTML = origGridHTML;
+      renderGallery();
+      return;
+    }
+    const pagesToProcess = Math.min(totalPages, remaining);
+    if (totalPages > remaining) {
+      showGalleryWarn(`PDF가 ${totalPages}페이지지만 남은 ${remaining}장만 변환됐어요 (최대 ${MAX_PAGES}장 제한)`);
+    }
+
+    // 각 페이지를 이미지로 변환
+    for (let pageNum = 1; pageNum <= pagesToProcess; pageNum++) {
+      // 진행 상황 표시 갱신
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--g7);font-size:13px">
+        <div class="dots" style="justify-content:center;margin:0 0 10px"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        PDF 변환 중... <b>${pageNum} / ${pagesToProcess}</b> 페이지
+      </div>`;
+
+      const page = await pdf.getPage(pageNum);
+      // 적당한 해상도로 변환 (긴 변 1600px 정도)
+      const viewport = page.getViewport({ scale: 1.0 });
+      const targetMax = 1600;
+      const scale = Math.min(targetMax / viewport.width, targetMax / viewport.height, 2.5);
+      const scaledViewport = page.getViewport({ scale });
+
+      // Canvas에 렌더링
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.ceil(scaledViewport.width);
+      canvas.height = Math.ceil(scaledViewport.height);
+      const ctx = canvas.getContext('2d');
+      // 흰 배경 (투명 PDF 대응)
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      await page.render({ canvasContext: ctx, viewport: scaledViewport }).promise;
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      galleryImages.push(dataUrl);
+    }
+
+    renderGallery();
+  } catch (err) {
+    console.error('PDF 처리 오류:', err);
+    let errorMsg = 'PDF를 처리할 수 없어요';
+    if (err.message?.includes('password') || err.name === 'PasswordException') {
+      errorMsg = '비밀번호가 걸린 PDF는 지원하지 않아요';
+    } else if (err.message?.includes('Invalid PDF')) {
+      errorMsg = '유효한 PDF 파일이 아닙니다';
+    }
+    showGalleryWarn(errorMsg);
+    renderGallery();
+  }
 }
 
 // 경고 메시지 표시
