@@ -914,7 +914,7 @@ input:focus,select:focus{border-color:var(--p2)}
         <div class="member-banner-ic">✨</div>
         <div class="member-banner-body">
           <div class="member-banner-ttl">매쓰홀릭 프리미엄</div>
-          <div class="member-banner-sub">무제한 모의고사 + 영상해설 + 광고 제거</div>
+          <div class="member-banner-sub">무제한 모의고사 + 오답 유사 문제 풀기 + 영상해설</div>
         </div>
         <div style="font-size:18px;opacity:.7">›</div>
       </div>
@@ -1218,6 +1218,10 @@ input:focus,select:focus{border-color:var(--p2)}
     <div class="mock-intro">
       <div class="mock-intro-ttl">🎯 AI 적응형 모의고사</div>
       <div class="mock-intro-sub">매 회차마다 새로운 10문항을 AI가 생성해요.<br>이전 회차 점수와 약점 단원을 분석해 난이도가 자동 조정됩니다.</div>
+      <div style="display:flex;gap:6px;margin-top:10px;margin-bottom:2px">
+        <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:var(--p5);color:var(--p1)">✓ 1~3회차 무료</span>
+        <span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:#FEF3C7;color:#B45309">👑 4~10회차 프리미엄</span>
+      </div>
       <div class="mock-prog-wrap">
         <div class="mock-prog-bar"><div class="mock-prog-fill" id="mock-prog-fill" style="width:0%"></div></div>
         <div class="mock-prog-text"><span id="mock-prog-label">아직 응시한 회차가 없어요</span><span id="mock-prog-count">0 / 10</span></div>
@@ -1331,7 +1335,7 @@ input:focus,select:focus{border-color:var(--p2)}
         </div>
       </div>
       <div id="unit-analysis"></div>
-      <div style="font-size:11px;color:var(--g5);margin-top:10px;text-align:center">셀 또는 동그라미를 누르면 쌍둥이 문항으로 이동합니다</div>
+      <div style="font-size:11px;color:var(--g5);margin-top:10px;text-align:center">취약·실수 유형을 탭하면 👑 프리미엄으로 쌍둥이 문항을 풀 수 있어요</div>
     </div>
     <div class="divider"></div>
     <div class="rp-sec">
@@ -1365,6 +1369,31 @@ input:focus,select:focus{border-color:var(--p2)}
 </div>
 
 <!-- ========== MODALS ========== -->
+
+<!-- 프리미엄 페이월 모달 -->
+<div class="modal-bg" id="m-premium-paywall">
+  <div class="modal-card" style="text-align:center">
+    <div class="modal-hd" style="justify-content:flex-end;border-bottom:none;padding-bottom:0">
+      <button class="modal-x" onclick="closeModal('m-premium-paywall')">×</button>
+    </div>
+    <div class="modal-bd" style="padding-top:4px">
+      <div style="font-size:44px;margin-bottom:10px">✨</div>
+      <div style="font-size:18px;font-weight:800;color:var(--g9);margin-bottom:6px" id="paywall-title">프리미엄 전용 기능이에요</div>
+      <div style="font-size:13px;color:var(--g7);line-height:1.65;margin-bottom:20px" id="paywall-desc">매쓰홀릭 프리미엄을 결제하면<br>이 기능을 무제한으로 이용할 수 있어요.</div>
+      <div style="background:linear-gradient(135deg,#FFFBEB,#FFF7E0);border:1px solid #FDE68A;border-radius:12px;padding:14px;margin-bottom:18px;text-align:left">
+        <div style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:9px">💎 프리미엄 혜택</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#7C5500"><span style="color:var(--p2);font-weight:700">✓</span> 오답 유사 문제(쌍둥이 문항) 무제한</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#7C5500"><span style="color:var(--p2);font-weight:700">✓</span> 모의고사 전 회차 무제한 응시</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#7C5500"><span style="color:var(--p2);font-weight:700">✓</span> 영상 해설 시청</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#7C5500"><span style="color:var(--p2);font-weight:700">✓</span> 광고 제거</div>
+        </div>
+      </div>
+      <button class="btn-fill" onclick="closeModal('m-premium-paywall');goTo('s-membership')">프리미엄 시작하기</button>
+      <button class="btn-ghost" style="margin-top:8px" onclick="closeModal('m-premium-paywall')">나중에 하기</button>
+    </div>
+  </div>
+</div>
 
 <!-- Social Login Modal -->
 <div class="modal-bg" id="m-social">
@@ -2301,12 +2330,14 @@ function renderMockList(){
   document.getElementById('mock-ai-tip-text').textContent = getAITip(history, nextRound);
 
   // 카드 리스트
+  const FREE_ROUNDS = 3; // 무료 회차 수
   const cards = [];
   for (let i = 1; i <= MOCK_TOTAL; i++) {
     const record = history[i-1];
     const isDone = record && record.score !== undefined;
     const isNext = (i === nextRound);
-    const isLocked = !isDone && !isNext;
+    const isPremiumLocked = (i > FREE_ROUNDS) && !isDone; // 4회차 이상 미완료 = 프리미엄
+    const isLocked = !isDone && !isNext && !isPremiumLocked;
     // 난이도: 응시했으면 record.difficulty, 다음 응시 회차면 계산, 잠긴 회차는 미리 계산
     let diff;
     if (isDone) diff = record.difficulty || 3.0;
@@ -2317,24 +2348,31 @@ function renderMockList(){
     let cardClass = 'mock-card';
     if (isDone) cardClass += ' done';
     if (isLocked) cardClass += ' locked';
+    if (isPremiumLocked) cardClass += ' locked';
+
     let numBoxClass = isDone ? 'done' : isNext ? 'next' : 'locked';
-    let onclick = isLocked ? '' : `onclick="startMockRound(${i})"`;
+    let onclick = '';
+    if (!isLocked && !isPremiumLocked) onclick = `onclick="startMockRound(${i})"`;
+    else if (isPremiumLocked) onclick = `onclick="openMockPaywall()"`;
 
     let rightSide;
     if (isDone) {
       rightSide = `<div class="mock-score">${record.score}<span style="font-size:10px;color:var(--g5)">점</span><div class="mock-score-lbl">${record.dateLabel||''}</div></div><div class="mock-card-arrow">›</div>`;
-    } else if (isNext) {
+    } else if (isNext && !isPremiumLocked) {
       rightSide = `<div style="font-size:10px;color:var(--p2);font-weight:700;text-align:right">응시 가능<div style="font-size:9px;color:var(--g5);font-weight:500;margin-top:2px">탭하여 시작</div></div><div class="mock-card-arrow">›</div>`;
+    } else if (isPremiumLocked) {
+      rightSide = `<div style="text-align:right"><div style="font-size:16px">👑</div><div style="font-size:9px;color:#B45309;font-weight:700;margin-top:2px">프리미엄</div></div>`;
     } else {
       rightSide = `<div style="font-size:14px;color:var(--g3)">🔒</div>`;
     }
 
     const titleParts = [`${i}회차`];
     if (isDone) titleParts.push('<span style="font-size:10px;color:var(--p1);font-weight:600">✓ 완료</span>');
-    if (isNext) titleParts.push('<span style="font-size:10px;color:#F5A623;font-weight:700">← 다음 응시</span>');
+    if (isNext && !isPremiumLocked) titleParts.push('<span style="font-size:10px;color:#F5A623;font-weight:700">← 다음 응시</span>');
+    if (isPremiumLocked) titleParts.push('<span style="font-size:10px;color:#B45309;font-weight:700;background:#FEF3C7;padding:1px 6px;border-radius:8px">👑 프리미엄</span>');
 
     cards.push(`
-      <div class="${cardClass}" ${onclick}>
+      <div class="${cardClass}" ${onclick} style="${isPremiumLocked ? 'opacity:.85;cursor:pointer' : ''}">
         <div class="mock-num-box ${numBoxClass}">
           <div class="mock-num-box-lbl">제</div>
           <div class="mock-num-box-num">${i}</div>
@@ -2342,14 +2380,20 @@ function renderMockList(){
         <div class="mock-card-body">
           <div class="mock-card-ttl">${titleParts.join(' ')}</div>
           <div class="mock-card-meta">
-            ${diffInfo ? `<span class="mock-diff-tag ${diffInfo.cls}">${diffInfo.label}</span>` : '<span style="color:var(--g5)">이전 회차 응시 후 잠금 해제</span>'}
-            ${isDone ? `<span style="margin-left:6px">10문항</span>` : isNext ? `<span style="margin-left:6px">10문항 · 30분</span>` : ''}
+            ${diffInfo ? `<span class="mock-diff-tag ${diffInfo.cls}">${diffInfo.label}</span>` : isPremiumLocked ? '<span style="color:#B45309;font-size:10px;font-weight:600">프리미엄 결제 후 이용 가능</span>' : '<span style="color:var(--g5)">이전 회차 응시 후 잠금 해제</span>'}
+            ${isDone ? `<span style="margin-left:6px">10문항</span>` : (isNext && !isPremiumLocked) ? `<span style="margin-left:6px">10문항 · 30분</span>` : ''}
           </div>
         </div>
         ${rightSide}
       </div>`);
   }
   document.getElementById('mock-list').innerHTML = cards.join('');
+}
+
+function openMockPaywall(){
+  document.getElementById('paywall-title').textContent='4회차부터는 프리미엄 전용이에요';
+  document.getElementById('paywall-desc').textContent='1~3회차는 무료로 응시할 수 있어요.\n4회차 이상 모의고사는 프리미엄 회원만 이용 가능합니다.';
+  openModal('m-premium-paywall');
 }
 
 function startMockRound(round){
@@ -3259,12 +3303,10 @@ const twinById={};
 UNITS.forEach(u=>u.types.forEach(tp=>{twinById[tp.id]=tp;}));
 
 function openTwin(typeId){
-  const tp=twinById[typeId];
-  currentTwin=tp;twinUA=null;twinSubmitted=false;
-  document.getElementById('twin-title').textContent=tp.name+' 쌍둥이 문항';
-  document.getElementById('twin-topic-badge').textContent=tp.name;
-  renderTwinQ();
-  goTo('s-twin');
+  // 프리미엄 전용 기능 — 페이월 모달 표시
+  document.getElementById('paywall-title').textContent='오답 유사 문제는 프리미엄 전용이에요';
+  document.getElementById('paywall-desc').textContent='취약 유형의 쌍둥이 문항을 풀어서\n반복 학습하는 기능은 프리미엄 회원만 이용할 수 있어요.';
+  openModal('m-premium-paywall');
 }
 
 function renderTwinQ(){
