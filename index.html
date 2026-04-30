@@ -16,6 +16,23 @@
 </script>
 <style>
 :root{--p1:#1A8A4A;--p2:#00BF6F;--p3:#3DD68C;--p5:#C5F5E2;--g9:#1A1A1A;--g8:#333333;--g7:#4D4D4D;--g5:#999999;--g3:#CCCCCC;--g1:#F2F2F2;--g0:#FFFFFF;--danger:#FF4D4D;--danger-l:#FFE8E8;--font-sans:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretendard','Noto Sans KR','Malgun Gothic',sans-serif;}
+[data-theme="dark"]{--p1:#3DD68C;--p2:#00BF6F;--p3:#1A8A4A;--p5:#0F2A1F;--g9:#F5F5F5;--g8:#E5E5E5;--g7:#B8B8B8;--g5:#888888;--g3:#555555;--g1:#2A2A2A;--g0:#1A1A1A;--danger:#FF6B6B;--danger-l:#3A1F1F;}
+[data-theme="dark"] .modal-card{background:#252525}
+[data-theme="dark"] .upload-zone{background:#2A2A2A}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#2A2A2A !important;color:var(--g9) !important;border-color:var(--g3) !important}
+[data-theme="dark"] .analy-q-exp,[data-theme="dark"] .rc-exp-box{background:#3A2F0F;border-color:#5A4A1A}
+[data-theme="dark"] .rc-exp-hdr,[data-theme="dark"] .analy-q-exp-hdr{color:#FCD34D}
+[data-theme="dark"] .gal-warn{background:#3A2F0F;border-color:#5A4A1A;color:#FCD34D}
+[data-theme="dark"] .mock-card.done{background:linear-gradient(to right,#0F2A1F 0%,var(--g0) 60%);border-color:#1A4A2F}
+[data-theme="dark"] .mock-ai-tip{background:var(--g0);border-color:var(--p2)}
+/* 접근성: 포커스 표시 */
+*:focus-visible{outline:2px solid var(--p2);outline-offset:2px;border-radius:4px}
+/* 접근성: 키보드 네비게이션 - 클릭 가능한 요소 명확화 */
+button:not(:disabled),[role="button"]:not(:disabled),.cell:not(.c-na),.dot:not(.d-na){cursor:pointer}
+/* 접근성: 글자 크기 키울 수 있는 사용자 대응 */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;overflow-x:hidden;font-family:var(--font-sans);background:var(--g1);color:var(--g9);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 /* 스크린리더 전용 (화면에는 안 보임) */
@@ -97,6 +114,126 @@ button{font-family:inherit;-webkit-appearance:none;appearance:none}
 .analy-loading-text{font-size:13px;font-weight:600;color:var(--g7);margin-bottom:4px}
 .analy-loading-sub{font-size:11px;color:var(--g5)}
 
+/* ========= 학교 정보 기반 분석 화면 ========= */
+.school-analy-hd{background:linear-gradient(135deg,var(--p2) 0%,var(--p1) 100%);color:#fff;border-radius:13px;padding:16px;margin-bottom:14px;text-align:center}
+.school-analy-badge{display:inline-block;background:rgba(255,255,255,.22);font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;margin-bottom:7px}
+.school-analy-school{font-size:17px;font-weight:800;margin-bottom:3px}
+.school-analy-meta{font-size:12px;opacity:.92;margin-bottom:5px}
+.school-analy-source{font-size:10px;opacity:.8}
+.analy-section{margin-bottom:18px}
+.analy-section-ttl{font-size:14px;font-weight:800;color:var(--g9);margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.trend-card{background:var(--g0);border:1px solid var(--g1);border-radius:11px;padding:13px}
+.trend-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--g1)}
+.trend-row:last-child{border-bottom:none}
+.trend-row:first-child{padding-top:0}
+.trend-row:last-child{padding-bottom:0}
+.trend-label{font-size:11px;font-weight:700;color:var(--g7);width:50px;flex-shrink:0}
+.trend-bars{display:flex;gap:2px;flex:1;height:10px;border-radius:3px;overflow:hidden}
+.trend-bar{height:100%}
+.trend-tag{font-size:11px;font-weight:700;color:var(--p1);width:38px;text-align:right;flex-shrink:0}
+.unit-weight-list{background:var(--g0);border:1px solid var(--g1);border-radius:11px;padding:13px}
+.unit-weight-row{display:flex;align-items:center;gap:10px;padding:7px 0}
+.unit-weight-row+.unit-weight-row{border-top:1px solid var(--g1)}
+.unit-weight-name{font-size:12px;font-weight:600;color:var(--g8);flex:1;min-width:0}
+.unit-weight-bar{width:80px;height:7px;background:var(--g1);border-radius:4px;overflow:hidden;flex-shrink:0}
+.unit-weight-fill{height:100%;background:linear-gradient(90deg,var(--p3),var(--p2));border-radius:4px}
+.unit-weight-pct{font-size:11px;font-weight:800;color:var(--p1);width:34px;text-align:right;flex-shrink:0}
+.freq-list{background:var(--g0);border:1px solid var(--g1);border-radius:11px;padding:6px 13px}
+.freq-row{display:flex;align-items:center;gap:11px;padding:11px 0}
+.freq-row+.freq-row{border-top:1px solid var(--g1)}
+.freq-rank{width:24px;height:24px;border-radius:6px;background:var(--g1);color:var(--g7);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.freq-rank.gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#5C3D00}
+.freq-rank.silver{background:linear-gradient(135deg,#C0C0C0,#9C9C9C);color:#3F3F3F}
+.freq-rank.bronze{background:linear-gradient(135deg,#CD7F32,#A0522D);color:#fff}
+.freq-body{flex:1;min-width:0}
+.freq-name{font-size:12px;font-weight:700;color:var(--g9);margin-bottom:2px;line-height:1.3}
+.freq-meta{font-size:10px;color:var(--g5);line-height:1.4}
+.freq-rate{font-size:13px;font-weight:800;color:var(--p1);flex-shrink:0}
+.prev-exam-card{background:var(--g0);border:1px solid var(--g1);border-radius:11px;overflow:hidden}
+.prev-exam-hd{background:var(--g1);padding:10px 13px;border-bottom:1px solid var(--g3)}
+.prev-exam-tag{font-size:11px;font-weight:700;color:var(--p1);margin-bottom:2px}
+.prev-exam-info{font-size:10px;color:var(--g7)}
+.prev-exam-q{display:flex;gap:10px;padding:9px 13px;align-items:flex-start}
+.prev-exam-q+.prev-exam-q{border-top:1px solid var(--g1)}
+.prev-exam-q-num{font-size:10px;font-weight:700;color:var(--p2);background:var(--p5);padding:2px 6px;border-radius:4px;flex-shrink:0;margin-top:1px}
+.prev-exam-q-text{font-size:12px;color:var(--g8);line-height:1.5;flex:1}
+.prev-exam-more{padding:10px;text-align:center;color:var(--p2);font-size:11px;font-weight:700;cursor:pointer;background:var(--g1);border-top:1px solid var(--g1)}
+.ai-rec-card{background:linear-gradient(135deg,#FFFBEB 0%,#FFF7E0 100%);border:1px solid #FDE68A;border-radius:11px;padding:11px 13px}
+.ai-rec-row{display:flex;gap:9px;align-items:flex-start;padding:7px 0}
+.ai-rec-row+.ai-rec-row{border-top:1px solid #FDE68A}
+.ai-rec-ic{font-size:16px;line-height:1.3;flex-shrink:0;margin-top:1px}
+.ai-rec-text{font-size:12px;color:#7C5500;line-height:1.55;flex:1}
+.ai-rec-text b{color:#92400E;font-weight:800}
+.upload-cta{background:linear-gradient(135deg,#F0FDF4 0%,#FFFFFF 60%);border:2px dashed var(--p3);border-radius:13px;padding:16px;text-align:center;margin:14px 0}
+.upload-cta-ttl{font-size:13px;font-weight:800;color:var(--p1);margin-bottom:5px}
+.upload-cta-sub{font-size:11px;color:var(--g7);line-height:1.55}
+.exam-cta{background:var(--g0);border:1px solid var(--p2);border-radius:13px;padding:13px;display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.exam-cta-ic{font-size:30px;flex-shrink:0}
+.exam-cta-body{flex:1;min-width:0}
+.exam-cta-ttl{font-size:13px;font-weight:800;color:var(--g9);margin-bottom:2px;line-height:1.3}
+.exam-cta-sub{font-size:11px;color:var(--g7);line-height:1.4}
+[data-theme="dark"] .ai-rec-card{background:linear-gradient(135deg,#3A2F0F 0%,#2A1F00 100%);border-color:#5A4A1A}
+[data-theme="dark"] .ai-rec-text{color:#FCD34D}
+[data-theme="dark"] .ai-rec-text b{color:#FEF3C7}
+[data-theme="dark"] .upload-cta{background:linear-gradient(135deg,#0F2A1F 0%,#1A1A1A 60%)}
+
+/* ========= 기출 문제 아코디언 (학생용 메인) ========= */
+.past-exam-wrap{background:var(--g0);border:1px solid var(--g1);border-radius:13px;overflow:hidden;margin-bottom:8px}
+.past-exam-hd{background:linear-gradient(135deg,#FFF7E0 0%,#FFFAF0 100%);padding:11px 14px;border-bottom:1px solid #FCD34D}
+.past-exam-tag{display:inline-block;font-size:10px;font-weight:700;background:#F5A623;color:#fff;padding:2px 8px;border-radius:9px;margin-bottom:5px}
+.past-exam-info{font-size:11px;color:#7C5500;font-weight:600}
+.past-q-item{border-bottom:1px solid var(--g1)}
+.past-q-item:last-child{border-bottom:none}
+.past-q-head{display:flex;align-items:center;gap:9px;padding:11px 14px;cursor:pointer;user-select:none;background:var(--g0);transition:background .12s}
+.past-q-head:hover{background:var(--g1)}
+.past-q-head.expanded{background:var(--p5);border-bottom:1px solid var(--p3)}
+.past-q-num{display:flex;align-items:center;justify-content:center;min-width:28px;height:24px;border-radius:6px;background:var(--p5);color:var(--p1);font-size:11px;font-weight:800;flex-shrink:0;padding:0 4px}
+.past-q-head.expanded .past-q-num{background:var(--p2);color:#fff}
+.past-q-text{flex:1;font-size:12.5px;color:var(--g8);line-height:1.45;font-weight:500}
+.past-q-arrow{font-size:11px;color:var(--g5);transition:transform .25s}
+.past-q-head.expanded .past-q-arrow{transform:rotate(180deg);color:var(--p1)}
+.past-q-body{max-height:0;overflow:hidden;transition:max-height .35s ease;background:var(--g0)}
+.past-q-body.expanded{max-height:1500px}
+.past-q-body-inner{padding:13px 14px;border-bottom:2px solid var(--p5)}
+.past-q-full{font-size:13px;color:var(--g9);line-height:1.6;margin-bottom:11px;padding:11px;background:var(--g1);border-radius:8px;font-weight:500}
+.past-q-opts{display:flex;flex-direction:column;gap:5px;margin-bottom:11px}
+.past-q-opt{font-size:12px;color:var(--g8);padding:7px 10px;background:var(--g0);border:1px solid var(--g1);border-radius:7px}
+.past-q-ans-row{display:flex;align-items:center;gap:8px;background:var(--p5);padding:8px 11px;border-radius:7px;margin-bottom:8px}
+.past-q-ans-lbl{font-size:10px;font-weight:700;color:var(--p1)}
+.past-q-ans-val{font-size:13px;color:var(--g9);font-weight:700;flex:1}
+.past-q-exp{background:#FFFBEB;border:1px solid #FDE68A;border-radius:7px;padding:9px 11px;font-size:12px;color:var(--g8);line-height:1.6}
+.past-q-exp-hdr{font-size:10px;font-weight:700;color:#92400E;margin-bottom:3px;display:flex;align-items:center;gap:4px}
+
+/* 모든 펼치기 / 모두 접기 토글 */
+.past-exam-controls{display:flex;justify-content:flex-end;padding:8px 14px;background:var(--g1);border-bottom:1px solid var(--g3)}
+.past-ctrl-btn{font-size:11px;color:var(--p2);font-weight:700;background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:5px}
+.past-ctrl-btn:hover{background:var(--p5)}
+.past-show-more{width:100%;background:var(--g1);border:none;border-top:1px solid var(--g3);padding:11px;font-size:12px;font-weight:700;color:var(--p2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .12s}
+.past-show-more:hover{background:var(--p5)}
+.past-show-more-arrow{font-size:10px;transition:transform .25s}
+
+/* 풀어보기 시작 CTA */
+.try-cta{background:linear-gradient(135deg,var(--p2) 0%,var(--p1) 100%);color:#fff;border-radius:14px;padding:18px;margin:14px 0;text-align:center;border:none;width:100%;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .12s}
+.try-cta:active{transform:scale(.98)}
+.try-cta-ic{font-size:32px;line-height:1}
+.try-cta-ttl{font-size:15px;font-weight:800;line-height:1.3}
+.try-cta-sub{font-size:12px;opacity:.92;line-height:1.4}
+
+/* 부가 분석 더보기 아코디언 */
+.extra-analy-toggle{width:100%;background:var(--g0);border:1px solid var(--g1);border-radius:11px;padding:13px 16px;margin-top:14px;font-size:13px;font-weight:700;color:var(--g7);cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s}
+.extra-analy-toggle:hover{background:var(--g1)}
+.extra-analy-arrow{font-size:11px;color:var(--g5);transition:transform .3s ease}
+.extra-analy-toggle.expanded .extra-analy-arrow{transform:rotate(180deg)}
+.extra-analy-section{max-height:0;overflow:hidden;transition:max-height .4s ease;margin-top:0}
+.extra-analy-section.expanded{max-height:3000px;margin-top:10px}
+
+/* 기출 풀이 진행 헤더 */
+.past-prog-hd{background:var(--g0);padding:10px 1.25rem;border-bottom:1px solid var(--g1);display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.past-prog-info{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--g8)}
+.past-prog-info b{color:var(--p1)}
+.past-prog-bar{height:4px;background:var(--g1);border-radius:2px;margin:0 1.25rem;overflow:hidden}
+.past-prog-fill{height:100%;background:linear-gradient(90deg,var(--p3),var(--p2));border-radius:2px;transition:width .3s}
+
 /* ========= 모의고사 회차 리스트 ========= */
 .mock-wrap{padding:1.25rem;background:var(--g1);min-height:calc(100vh - 60px)}
 .mock-intro{background:linear-gradient(135deg,var(--p2) 0%,var(--p1) 100%);color:#fff;border-radius:14px;padding:16px;margin-bottom:14px}
@@ -130,6 +267,194 @@ button{font-family:inherit;-webkit-appearance:none;appearance:none}
 .mock-card-arrow{color:var(--g3);font-size:16px;flex-shrink:0}
 .mock-ai-tip{background:var(--g0);border:1px dashed var(--p3);border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11px;color:var(--g7);line-height:1.5}
 .mock-ai-tip-hdr{font-size:11px;font-weight:700;color:var(--p1);margin-bottom:3px;display:flex;align-items:center;gap:4px}
+
+/* ========= 알림 센터 / D-Day 카드 ========= */
+.dday-card{background:linear-gradient(135deg,#FF6B6B 0%,#EE5A6F 100%);color:#fff;border-radius:12px;padding:13px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.dday-num{font-size:28px;font-weight:800;line-height:1;text-shadow:0 1px 3px rgba(0,0,0,.2)}
+.dday-num small{font-size:13px;font-weight:600;margin-left:2px}
+.dday-body{flex:1;min-width:0}
+.dday-ttl{font-size:13px;font-weight:700;margin-bottom:2px}
+.dday-sub{font-size:11px;opacity:.9;line-height:1.4}
+.dday-arrow{color:#fff;opacity:.7;font-size:18px}
+.dday-card.done{background:linear-gradient(135deg,var(--g5),var(--g7))}
+.dday-card.urgent{animation:pulseDday 2s ease infinite}
+@keyframes pulseDday{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,.4)}50%{box-shadow:0 0 0 8px rgba(255,107,107,0)}}
+
+.bell-btn{background:none;border:none;cursor:pointer;font-size:18px;position:relative;padding:6px;color:rgba(255,255,255,.95)}
+.bell-badge{position:absolute;top:2px;right:2px;background:#FF4D4D;color:#fff;font-size:9px;font-weight:700;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;justify-content:center;padding:0 3px;line-height:1}
+.notif-list{max-height:60vh;overflow-y:auto}
+.notif-item{padding:11px 12px;border-bottom:1px solid var(--g1);display:flex;gap:10px;cursor:pointer}
+.notif-item:last-child{border-bottom:none}
+.notif-item:hover{background:var(--g1)}
+.notif-item.unread{background:linear-gradient(to right,var(--p5) 0%,var(--g0) 30%)}
+.notif-ic{width:32px;height:32px;border-radius:9px;background:var(--p5);color:var(--p1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.notif-body{flex:1;min-width:0}
+.notif-ttl{font-size:13px;font-weight:700;color:var(--g9);margin-bottom:2px}
+.notif-msg{font-size:11px;color:var(--g7);line-height:1.45;margin-bottom:2px}
+.notif-time{font-size:10px;color:var(--g5)}
+.notif-empty{padding:30px 20px;text-align:center;color:var(--g5);font-size:13px}
+
+/* ========= 성취 / 배지 시스템 ========= */
+.streak-card{background:linear-gradient(135deg,#FFB347 0%,#FF6B6B 100%);color:#fff;border-radius:12px;padding:13px 14px;margin-bottom:9px;display:flex;align-items:center;gap:12px}
+.streak-fire{font-size:32px;line-height:1}
+.streak-body{flex:1}
+.streak-num{font-size:22px;font-weight:800;line-height:1.1;margin-bottom:1px}
+.streak-num small{font-size:13px;font-weight:600;opacity:.9}
+.streak-msg{font-size:11px;opacity:.95;line-height:1.4}
+
+.badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.badge-tile{aspect-ratio:1;border-radius:10px;background:var(--g0);border:1.5px solid var(--g1);padding:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer;transition:transform .12s}
+.badge-tile:active{transform:scale(.94)}
+.badge-tile.locked{opacity:.4;filter:grayscale(.8)}
+.badge-tile.earned{border-color:var(--p2);background:linear-gradient(135deg,var(--p5) 0%,var(--g0) 80%)}
+.badge-emoji{font-size:24px;line-height:1;margin-bottom:3px}
+.badge-name{font-size:9px;font-weight:700;color:var(--g8);line-height:1.2}
+.badge-tile.earned .badge-name{color:var(--p1)}
+
+.modal-bd .badges-grid-large{grid-template-columns:repeat(3,1fr);gap:10px}
+.badge-detail{padding:14px;background:var(--g1);border-radius:10px;margin-top:14px;text-align:center}
+.badge-detail-emoji{font-size:48px;margin-bottom:8px}
+.badge-detail-name{font-size:15px;font-weight:700;color:var(--g9);margin-bottom:4px}
+.badge-detail-desc{font-size:12px;color:var(--g7);line-height:1.5}
+.badge-detail-status{margin-top:8px;font-size:11px;font-weight:700}
+.badge-detail-status.earned{color:var(--p1)}
+.badge-detail-status.locked{color:var(--g5)}
+
+/* 배지 획득 토스트 */
+.badge-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-150%);background:linear-gradient(135deg,#FFD700,#FFA500);color:#fff;padding:12px 20px;border-radius:30px;box-shadow:0 8px 24px rgba(0,0,0,.25);display:flex;align-items:center;gap:10px;z-index:200;font-weight:700;font-size:13px;transition:transform .4s cubic-bezier(.34,1.56,.64,1);max-width:90vw}
+.badge-toast.show{transform:translateX(-50%) translateY(0)}
+.badge-toast-emoji{font-size:24px}
+
+/* ========= 학부모 모드 ========= */
+.role-switch{display:flex;background:var(--g1);border-radius:10px;padding:3px;margin-bottom:12px;gap:2px}
+.role-btn{flex:1;padding:8px;border:none;background:transparent;font-size:12px;font-weight:600;color:var(--g7);cursor:pointer;border-radius:8px;transition:all .2s}
+.role-btn.active{background:var(--g0);color:var(--p1);box-shadow:0 1px 3px rgba(0,0,0,.08);font-weight:700}
+.parent-section{padding:1.1rem 1.25rem;background:var(--g1)}
+.parent-card{background:var(--g0);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--g1)}
+.parent-card-ttl{font-size:13px;font-weight:700;color:var(--g8);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.parent-stat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+.parent-stat-cell{padding:11px;background:var(--g1);border-radius:9px;text-align:center}
+.parent-stat-num{font-size:20px;font-weight:800;color:var(--p1);margin-bottom:2px}
+.parent-stat-lbl{font-size:10px;color:var(--g7);font-weight:600}
+.parent-trend{height:90px;display:flex;align-items:flex-end;gap:6px;padding:10px 4px}
+.parent-trend-bar{flex:1;background:linear-gradient(to top,var(--p2),var(--p3));border-radius:4px 4px 0 0;min-height:6px;position:relative}
+.parent-trend-bar-lbl{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:var(--g7);white-space:nowrap}
+.parent-trend-bar-x{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--g5);white-space:nowrap}
+.parent-trend-wrap{padding-top:18px;padding-bottom:18px;border-bottom:1px solid var(--g1);margin-bottom:10px}
+.parent-list-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--g1);font-size:12px}
+.parent-list-item:first-child{border-top:none}
+.parent-list-ic{width:28px;height:28px;border-radius:8px;background:var(--p5);color:var(--p1);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.parent-list-text{flex:1;color:var(--g8);line-height:1.45}
+.parent-list-time{font-size:10px;color:var(--g5);flex-shrink:0}
+
+/* ========= 결제 / 멤버십 ========= */
+.plan-card{border:2px solid var(--g1);border-radius:14px;padding:14px;margin-bottom:10px;cursor:pointer;background:var(--g0);transition:all .15s}
+.plan-card.recommended{border-color:var(--p2);position:relative}
+.plan-card.recommended::before{content:'추천';position:absolute;top:-9px;right:14px;background:var(--p2);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:9px}
+.plan-card.selected{border-color:var(--p2);background:linear-gradient(135deg,var(--p5) 0%,var(--g0) 80%)}
+.plan-name{font-size:14px;font-weight:700;color:var(--g9);margin-bottom:3px}
+.plan-price{font-size:18px;font-weight:800;color:var(--p1);margin-bottom:3px}
+.plan-price small{font-size:11px;color:var(--g5);font-weight:500}
+.plan-old{font-size:11px;color:var(--g5);text-decoration:line-through;margin-bottom:6px}
+.plan-feats{font-size:11px;color:var(--g7);line-height:1.7}
+.plan-feats-item{display:flex;align-items:flex-start;gap:5px}
+.plan-feats-item::before{content:'✓';color:var(--p2);font-weight:700;flex-shrink:0}
+.member-banner{background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);color:#fff;border-radius:12px;padding:13px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.member-banner.active{background:linear-gradient(135deg,#FFD700 0%,#FFA500 100%);color:#5C3D00}
+.member-banner-ic{font-size:24px;line-height:1;flex-shrink:0}
+.member-banner-body{flex:1;min-width:0}
+.member-banner-ttl{font-size:13px;font-weight:700;margin-bottom:1px;line-height:1.3}
+.member-banner-sub{font-size:11px;opacity:.9;line-height:1.4}
+
+/* ========= 친구 / 순위 ========= */
+.rank-card{background:var(--g0);border:1px solid var(--g1);border-radius:11px;padding:11px 13px;margin-bottom:7px;display:flex;align-items:center;gap:10px}
+.rank-card.me{background:linear-gradient(135deg,var(--p5) 0%,var(--g0) 80%);border-color:var(--p2)}
+.rank-num{width:30px;height:30px;border-radius:50%;background:var(--g1);color:var(--g7);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+.rank-num.gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#5C3D00}
+.rank-num.silver{background:linear-gradient(135deg,#C0C0C0,#9C9C9C);color:#3F3F3F}
+.rank-num.bronze{background:linear-gradient(135deg,#CD7F32,#A0522D);color:#fff}
+.rank-avatar{width:36px;height:36px;border-radius:50%;background:var(--p2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.rank-body{flex:1;min-width:0}
+.rank-name{font-size:13px;font-weight:700;color:var(--g9);margin-bottom:2px}
+.rank-meta{font-size:10px;color:var(--g5)}
+.rank-score{font-size:15px;font-weight:800;color:var(--p1);text-align:right;flex-shrink:0}
+.rank-score small{font-size:10px;color:var(--g5);font-weight:500;margin-left:2px}
+
+/* ========= 커뮤니티 풀이 ========= */
+.sol-card{background:var(--g0);border:1px solid var(--g1);border-radius:11px;padding:13px;margin-bottom:9px}
+.sol-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sol-avatar{width:28px;height:28px;border-radius:50%;background:var(--p5);color:var(--p1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.sol-author{font-size:12px;font-weight:700;color:var(--g8)}
+.sol-author-tag{font-size:9px;background:var(--p2);color:#fff;padding:1px 5px;border-radius:4px;font-weight:700;margin-left:4px}
+.sol-time{font-size:10px;color:var(--g5);margin-left:auto}
+.sol-body{font-size:12px;color:var(--g8);line-height:1.55;margin-bottom:8px;white-space:pre-wrap}
+.sol-actions{display:flex;gap:14px;font-size:11px;color:var(--g5)}
+.sol-act{display:flex;align-items:center;gap:3px;cursor:pointer}
+.sol-act:hover{color:var(--p2)}
+.sol-act.liked{color:#FF4D6D;font-weight:700}
+
+/* ========= 영상 해설 ========= */
+.video-card{background:var(--g0);border:1px solid var(--g1);border-radius:11px;overflow:hidden;margin-bottom:10px;cursor:pointer}
+.video-thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#1F2937,#111827);position:relative;display:flex;align-items:center;justify-content:center;color:#fff}
+.video-play{width:48px;height:48px;background:rgba(255,255,255,.95);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--p1);font-size:18px;padding-left:3px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.video-duration{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.75);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600}
+.video-meta{padding:9px 11px}
+.video-title{font-size:12px;font-weight:700;color:var(--g9);margin-bottom:3px;line-height:1.4}
+.video-author{font-size:10px;color:var(--g5)}
+.video-player-modal .modal-card{max-width:90vw}
+.video-player{aspect-ratio:16/9;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;border-radius:8px;margin-bottom:10px}
+.video-placeholder{font-size:13px;text-align:center;padding:1rem;line-height:1.6}
+
+/* ========= 다크모드 토글 ========= */
+.theme-toggle{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.95);font-size:18px;padding:6px}
+.dash-hero-actions{display:flex;align-items:center;gap:6px;position:absolute;top:12px;right:12px}
+.dash-hero{position:relative}
+
+/* ========= Hero에 인라인 D-Day + Streak 칩 ========= */
+.hero-meta-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;padding-right:80px}
+.hero-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:16px;padding:5px 11px;font-size:11px;font-weight:700;backdrop-filter:blur(6px);cursor:default;transition:transform .12s}
+.hero-chip.dday{cursor:pointer;border:none;background:rgba(255,255,255,.25)}
+.hero-chip.dday:active{transform:scale(.95)}
+.hero-chip.dday.urgent{background:rgba(255,107,107,.5);border:1px solid rgba(255,255,255,.4);animation:chipPulse 2s ease infinite}
+@keyframes chipPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,.5)}50%{box-shadow:0 0 0 6px rgba(255,107,107,0)}}
+.hero-chip.streak{background:linear-gradient(135deg,rgba(255,179,71,.4),rgba(255,107,107,.4));border:1px solid rgba(255,255,255,.3)}
+.hero-chip-ic{font-size:13px;line-height:1}
+
+/* ========= 메인 학습 메뉴 (크고 강조) ========= */
+.main-menu-hd{margin-bottom:11px}
+.main-menu-ttl-text{font-size:16px;font-weight:800;color:var(--g9);margin-bottom:2px;display:flex;align-items:center;gap:5px}
+.main-menu-ttl-sub{font-size:11px;color:var(--g5);font-weight:500}
+.main-actions{display:flex;flex-direction:column;gap:11px;margin-bottom:6px}
+.main-action{background:var(--g0);border:none;border-radius:16px;padding:18px 16px;cursor:pointer;display:flex;align-items:center;gap:13px;text-align:left;width:100%;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
+.main-action:active{transform:scale(.98)}
+.main-action:hover{box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.main-action.primary{background:linear-gradient(135deg,var(--p2) 0%,var(--p1) 100%);color:#fff}
+.main-action.primary::after{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;background:rgba(255,255,255,.08);border-radius:50%}
+.main-action.secondary{background:linear-gradient(135deg,#FFF7E0 0%,#FFFAF0 100%);border:2px solid #F5A623}
+.main-action.tertiary{background:linear-gradient(135deg,#F3E8FF 0%,#F9F5FF 100%);border:2px solid #7C3AED}
+.main-action-ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;z-index:1}
+.main-action.primary .main-action-ic{background:rgba(255,255,255,.22);backdrop-filter:blur(4px)}
+.main-action.secondary .main-action-ic{background:#FCD34D;color:#92400E}
+.main-action.tertiary .main-action-ic{background:#DDD6FE;color:#5B21B6}
+.main-action-body{flex:1;min-width:0;z-index:1}
+.main-action-ttl{font-size:16px;font-weight:800;line-height:1.3;margin-bottom:3px}
+.main-action.primary .main-action-ttl{color:#fff}
+.main-action.secondary .main-action-ttl{color:#92400E}
+.main-action.tertiary .main-action-ttl{color:#5B21B6}
+.main-action-sub{font-size:12px;line-height:1.45;opacity:.9}
+.main-action.primary .main-action-sub{color:rgba(255,255,255,.9)}
+.main-action.secondary .main-action-sub{color:#A06800}
+.main-action.tertiary .main-action-sub{color:#6D28D9}
+.main-action-arrow{font-size:22px;flex-shrink:0;z-index:1;font-weight:300;opacity:.7}
+.main-action.primary .main-action-arrow{color:#fff}
+
+/* ========= 더보기 아코디언 ========= */
+.more-toggle{width:100%;background:var(--g0);border:1px solid var(--g1);border-radius:11px;padding:13px 16px;margin-top:14px;font-size:13px;font-weight:700;color:var(--g7);cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s}
+.more-toggle:hover{background:var(--g1)}
+.more-toggle-arrow{font-size:11px;color:var(--g5);transition:transform .3s ease}
+.more-toggle.expanded .more-toggle-arrow{transform:rotate(180deg)}
+.more-section{max-height:0;overflow:hidden;transition:max-height .35s ease;margin-top:0}
+.more-section.expanded{max-height:600px;margin-top:10px}
 .screen{display:none}.screen.active{display:block}
 .tb18{font-size:18px;font-weight:700;color:var(--g9)}.tb16{font-size:16px;font-weight:700;color:var(--g9)}
 .sb14{font-size:14px;font-weight:600;color:var(--g9)}.m14{font-size:14px;font-weight:500;color:var(--g8)}
@@ -457,15 +782,29 @@ input:focus,select:focus{border-color:var(--p2)}
       </div>
     </div>
     <div class="fg"><div class="fl">교과서 출판사</div><select><option>미래엔</option><option>동아</option><option>비상</option><option>천재교육</option></select></div>
+
+    <!-- 옵션 구분선 -->
+    <div style="display:flex;align-items:center;gap:10px;margin:18px 0 10px">
+      <div style="flex:1;height:1px;background:var(--g3)"></div>
+      <span style="font-size:11px;color:var(--g5);font-weight:600;white-space:nowrap">선택 사항</span>
+      <div style="flex:1;height:1px;background:var(--g3)"></div>
+    </div>
+
     <div class="fg">
-      <div class="fl" style="margin-bottom:8px">내 시험지 업로드 <span style="color:var(--g5);font-weight:400">(선택)</span></div>
+      <div class="fl" style="margin-bottom:6px;display:flex;align-items:center;gap:6px">
+        <span>내 시험지 업로드</span>
+        <span style="font-size:10px;background:var(--g1);color:var(--g7);padding:2px 7px;border-radius:10px;font-weight:600">건너뛰기 가능</span>
+      </div>
+      <div style="font-size:11px;color:var(--g5);margin-bottom:8px;line-height:1.5">
+        💡 작년 기출이나 비슷한 시험지가 있다면 업로드해 주세요.<br>없어도 학교/학년 정보로 분석을 시작할 수 있어요.
+      </div>
       <div class="upload-zone" id="upload-zone" onclick="openCameraModal()">
         <div class="uicon"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
         <div class="m14" id="upload-msg">시험지를 촬영하거나 PDF로 업로드</div>
         <div class="cr12" style="margin-top:3px">📷 카메라 · 🖼️ 사진 · 📄 PDF · 최대 6장</div>
       </div>
     </div>
-    <button class="btn-fill" onclick="goTo('s-analyzing')">AI 분석 시작</button>
+    <button class="btn-fill" onclick="goTo('s-analyzing')">우리 학교 기출 문제 분석</button>
   </div>
 </div>
 
@@ -490,6 +829,23 @@ input:focus,select:focus{border-color:var(--p2)}
 <!-- DASHBOARD (시험 홈 - 분석 완료 후 이동) -->
 <div id="s-dash" class="screen">
   <div class="dash-hero">
+    <div class="dash-hero-actions">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-toggle-btn" title="다크모드">🌙</button>
+      <button class="bell-btn" onclick="openModal('m-notif')" title="알림">
+        🔔<span class="bell-badge" id="notif-badge" style="display:none">0</span>
+      </button>
+    </div>
+    <!-- D-Day + Streak 인라인 (이름 위, 작은 칩 형태) -->
+    <div class="hero-meta-row">
+      <button class="hero-chip dday" onclick="openModal('m-dday-edit')" id="hero-dday-chip">
+        <span class="hero-chip-ic">📅</span>
+        <span id="hero-dday-text">시험일 설정</span>
+      </button>
+      <div class="hero-chip streak" id="hero-streak-chip">
+        <span class="hero-chip-ic">🔥</span>
+        <span id="hero-streak-text">0일 연속</span>
+      </div>
+    </div>
     <div class="dash-greet">안녕하세요 👋</div>
     <div class="dash-name">매쓰홀릭 학생</div>
     <div class="dash-exam-card" id="dash-exam-info">
@@ -501,49 +857,300 @@ input:focus,select:focus{border-color:var(--p2)}
       </div>
     </div>
   </div>
-  <div class="dash-section">
-    <div class="dash-sec-ttl">📚 학습 메뉴</div>
-    <div class="dash-actions">
-      <button class="dash-action" onclick="goToAnalysis()">
-        <div class="dash-action-ic">📝</div>
-        <div class="dash-action-body">
-          <div class="dash-action-ttl">내 시험지 분석 보기</div>
-          <div class="dash-action-sub">업로드한 시험지의 정답과 해설을 AI가 분석해드려요</div>
+
+  <!-- 학생 모드 콘텐츠 -->
+  <div id="dash-student-mode">
+    <div class="dash-section">
+      <!-- 메인 학습 메뉴 (크고 강조) -->
+      <div class="main-menu-hd">
+        <div class="main-menu-ttl-text">📚 학습 메뉴</div>
+        <div class="main-menu-ttl-sub">시험 대비를 시작해보세요</div>
+      </div>
+      <div class="main-actions">
+        <button class="main-action primary" onclick="goToAnalysis()">
+          <div class="main-action-ic">📝</div>
+          <div class="main-action-body">
+            <div class="main-action-ttl">우리 학교 시험지 분석 보기</div>
+            <div class="main-action-sub">우리 학교 작년 기출과 출제 경향을 AI가 분석해드려요</div>
+          </div>
+          <div class="main-action-arrow">›</div>
+        </button>
+        <button class="main-action secondary" onclick="goTo('s-mock-list')">
+          <div class="main-action-ic">🎯</div>
+          <div class="main-action-body">
+            <div class="main-action-ttl">예측 모의고사 응시</div>
+            <div class="main-action-sub">학교 시험과 유사한 모의고사 1~10회</div>
+          </div>
+          <div class="main-action-arrow">›</div>
+        </button>
+        <button class="main-action tertiary" onclick="goToReportFromDash()" id="dash-report-btn" style="display:none">
+          <div class="main-action-ic">📊</div>
+          <div class="main-action-body">
+            <div class="main-action-ttl">학습 보고서</div>
+            <div class="main-action-sub">유형별 이해도 분석 + 쌍둥이 문항</div>
+          </div>
+          <div class="main-action-arrow">›</div>
+        </button>
+      </div>
+
+      <div class="dash-sec-ttl" style="margin-top:18px">📈 학습 현황</div>
+      <div class="dash-stat-row">
+        <div class="dash-stat-cell">
+          <div class="dash-stat-num" id="dash-stat-done">0</div>
+          <div class="dash-stat-lbl">응시 회차</div>
         </div>
-        <div class="dash-action-arrow">›</div>
-      </button>
-      <button class="dash-action mock" onclick="goTo('s-mock-list')">
-        <div class="dash-action-ic">🎯</div>
-        <div class="dash-action-body">
-          <div class="dash-action-ttl">예측 모의고사 응시</div>
-          <div class="dash-action-sub">학교 시험과 유사한 모의고사 1~10회</div>
+        <div class="dash-stat-cell">
+          <div class="dash-stat-num" id="dash-stat-avg">-</div>
+          <div class="dash-stat-lbl">평균 점수</div>
         </div>
-        <div class="dash-action-arrow">›</div>
-      </button>
-      <button class="dash-action report" onclick="goToReportFromDash()" id="dash-report-btn" style="display:none">
-        <div class="dash-action-ic">📊</div>
-        <div class="dash-action-body">
-          <div class="dash-action-ttl">학습 보고서</div>
-          <div class="dash-action-sub">유형별 이해도 분석 + 쌍둥이 문항</div>
+        <div class="dash-stat-cell">
+          <div class="dash-stat-num" id="dash-stat-best">-</div>
+          <div class="dash-stat-lbl">최고 점수</div>
         </div>
-        <div class="dash-action-arrow">›</div>
+      </div>
+
+      <!-- 멤버십 배너 -->
+      <div class="member-banner" onclick="goTo('s-membership')" id="member-banner" style="margin-top:12px">
+        <div class="member-banner-ic">✨</div>
+        <div class="member-banner-body">
+          <div class="member-banner-ttl">매쓰홀릭 프리미엄</div>
+          <div class="member-banner-sub">무제한 모의고사 + 영상해설 + 광고 제거</div>
+        </div>
+        <div style="font-size:18px;opacity:.7">›</div>
+      </div>
+
+      <!-- 더보기 (아코디언) -->
+      <button class="more-toggle" onclick="toggleMoreSection()" id="more-toggle-btn">
+        <span style="display:flex;align-items:center;gap:6px">
+          <span>🏆</span>
+          <span>더보기</span>
+        </span>
+        <span class="more-toggle-arrow" id="more-toggle-arrow">▼</span>
       </button>
+      <div class="more-section" id="more-section">
+        <div class="dash-actions">
+          <button class="dash-action" onclick="goTo('s-badges')">
+            <div class="dash-action-ic" style="background:#FFF7E0;color:#B45309">🏅</div>
+            <div class="dash-action-body">
+              <div class="dash-action-ttl">내 배지 / 성취</div>
+              <div class="dash-action-sub" id="badges-summary">획득한 배지를 확인해보세요</div>
+            </div>
+            <div class="dash-action-arrow">›</div>
+          </button>
+          <button class="dash-action" onclick="goTo('s-friends')">
+            <div class="dash-action-ic" style="background:#E0F2FE;color:#0369A1">👥</div>
+            <div class="dash-action-body">
+              <div class="dash-action-ttl">친구 순위</div>
+              <div class="dash-action-sub">반 친구들과 점수를 비교해보세요</div>
+            </div>
+            <div class="dash-action-arrow">›</div>
+          </button>
+          <button class="dash-action" onclick="goTo('s-community')">
+            <div class="dash-action-ic" style="background:#F3E8FF;color:#6D28D9">💬</div>
+            <div class="dash-action-body">
+              <div class="dash-action-ttl">친구들의 풀이</div>
+              <div class="dash-action-sub">다른 학생들의 풀이 방법을 살펴보세요</div>
+            </div>
+            <div class="dash-action-arrow">›</div>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="dash-sec-ttl">📈 학습 현황</div>
-    <div class="dash-stat-row">
-      <div class="dash-stat-cell">
-        <div class="dash-stat-num" id="dash-stat-done">0</div>
-        <div class="dash-stat-lbl">응시 회차</div>
-      </div>
-      <div class="dash-stat-cell">
-        <div class="dash-stat-num" id="dash-stat-avg">-</div>
-        <div class="dash-stat-lbl">평균 점수</div>
-      </div>
-      <div class="dash-stat-cell">
-        <div class="dash-stat-num" id="dash-stat-best">-</div>
-        <div class="dash-stat-lbl">최고 점수</div>
+  </div>
+</div>
+
+<!-- 배지 / 성취 -->
+<div id="s-badges" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="goTo('s-dash')">‹</button>
+    <div class="sub-ttl">내 배지 / 성취</div>
+  </div>
+  <div style="padding:1.25rem;background:var(--g1);min-height:calc(100vh - 60px)">
+    <div class="streak-card" style="margin-bottom:14px">
+      <div class="streak-fire">🔥</div>
+      <div class="streak-body">
+        <div class="streak-num"><span id="badge-streak-days">0</span><small>일 연속 학습</small></div>
+        <div class="streak-msg" id="badge-streak-msg">매일 학습하면 연속 기록이 쌓여요!</div>
       </div>
     </div>
+    <div class="parent-card">
+      <div class="parent-card-ttl">🏅 획득한 배지 (<span id="badge-earned-count">0</span> / <span id="badge-total-count">0</span>)</div>
+      <div class="badges-grid badges-grid-large" id="badges-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 친구 / 순위 -->
+<div id="s-friends" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="goTo('s-dash')">‹</button>
+    <div class="sub-ttl">친구 순위</div>
+  </div>
+  <div style="padding:1.25rem;background:var(--g1);min-height:calc(100vh - 60px)">
+    <div style="background:linear-gradient(135deg,#0EA5E9 0%,#0369A1 100%);color:#fff;border-radius:12px;padding:14px;margin-bottom:14px">
+      <div style="font-size:14px;font-weight:800;margin-bottom:3px">🏆 우리반 순위</div>
+      <div style="font-size:11px;opacity:.9">매쓰중학교 · 중1-3반 · 32명</div>
+    </div>
+    <div style="background:var(--g0);border-radius:12px;padding:11px;margin-bottom:12px">
+      <div style="font-size:11px;color:var(--g5);margin-bottom:8px;text-align:center;font-weight:600">📍 내 등수: <span id="my-rank" style="color:var(--p1);font-weight:800;font-size:14px">-</span> / 32</div>
+    </div>
+    <div id="rank-list"></div>
+    <div style="margin-top:14px;padding:12px;background:var(--g0);border-radius:11px;border:1px dashed var(--g3);font-size:11px;color:var(--g7);line-height:1.6;text-align:center">
+      💡 같은 학교 친구들과 점수를 익명으로 비교해요.<br>친구 초대 시 5,000코인 보너스!
+    </div>
+  </div>
+</div>
+
+<!-- 커뮤니티 -->
+<div id="s-community" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="goTo('s-dash')">‹</button>
+    <div class="sub-ttl">친구들의 풀이</div>
+  </div>
+  <div style="padding:1.25rem;background:var(--g1);min-height:calc(100vh - 60px)">
+    <div style="background:linear-gradient(135deg,#7C3AED 0%,#5B21B6 100%);color:#fff;border-radius:12px;padding:14px;margin-bottom:14px">
+      <div style="font-size:14px;font-weight:800;margin-bottom:3px">💬 친구들의 풀이</div>
+      <div style="font-size:11px;opacity:.9;line-height:1.4">같은 시험을 본 학생들의 다양한 풀이 방법을 살펴보세요</div>
+    </div>
+    <div id="community-list"></div>
+    <div style="margin-top:14px;padding:12px;background:var(--g0);border-radius:11px;border:1px dashed var(--g3);font-size:11px;color:var(--g7);line-height:1.6;text-align:center">
+      💡 커뮤니티 기능은 출시 후 활성화됩니다.<br>현재는 미리보기 화면입니다.
+    </div>
+  </div>
+</div>
+
+<!-- 멤버십 / 결제 -->
+<div id="s-membership" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="goTo('s-dash')">‹</button>
+    <div class="sub-ttl">매쓰홀릭 프리미엄</div>
+  </div>
+  <div style="padding:1.25rem;background:var(--g1);min-height:calc(100vh - 60px)">
+    <div style="background:linear-gradient(135deg,#FFD700 0%,#FFA500 100%);color:#5C3D00;border-radius:14px;padding:18px;margin-bottom:14px;text-align:center">
+      <div style="font-size:32px;margin-bottom:6px">✨</div>
+      <div style="font-size:18px;font-weight:800;margin-bottom:4px">프리미엄으로 업그레이드</div>
+      <div style="font-size:12px;line-height:1.5">무제한 모의고사 + 영상해설 + AI 첨삭<br>광고 제거 + 학습 리포트 PDF 다운로드</div>
+    </div>
+
+    <div style="font-size:13px;font-weight:700;color:var(--g8);margin-bottom:9px">💎 요금제 선택</div>
+
+    <div class="plan-card" onclick="selectPlan('monthly',this)">
+      <div class="plan-name">월 구독</div>
+      <div class="plan-price">9,900<small>원/월</small></div>
+      <div class="plan-feats">
+        <div class="plan-feats-item">모든 프리미엄 기능 이용</div>
+        <div class="plan-feats-item">언제든 해지 가능</div>
+      </div>
+    </div>
+
+    <div class="plan-card recommended selected" onclick="selectPlan('yearly',this)" id="plan-yearly">
+      <div class="plan-name">연 구독 (35% 할인)</div>
+      <div class="plan-old">정가 118,800원</div>
+      <div class="plan-price">77,000<small>원/년 (월 6,417원)</small></div>
+      <div class="plan-feats">
+        <div class="plan-feats-item">모든 프리미엄 기능 이용</div>
+        <div class="plan-feats-item">월 구독보다 41,800원 절약</div>
+        <div class="plan-feats-item">학부모 대시보드 무제한</div>
+        <div class="plan-feats-item">우리학교 기출문제 무제한</div>
+      </div>
+    </div>
+
+    <div class="plan-card" onclick="selectPlan('semester',this)">
+      <div class="plan-name">시험 대비 6개월 패키지</div>
+      <div class="plan-price">39,900<small>원/6개월</small></div>
+      <div class="plan-feats">
+        <div class="plan-feats-item">중간 + 기말고사 한 번에 완벽 대비</div>
+        <div class="plan-feats-item">학교별 기출 + AI 모의고사 무제한</div>
+      </div>
+    </div>
+
+    <button class="btn-fill" style="margin-top:14px" onclick="goToCheckout()">결제하기</button>
+    <div style="font-size:10px;color:var(--g5);text-align:center;margin-top:10px;line-height:1.6">
+      매쓰홀릭 프리미엄은 자동 갱신되며, 갱신 24시간 전까지 해지 가능합니다.<br>
+      만 14세 미만은 보호자 동의 후 결제 가능합니다.
+    </div>
+  </div>
+</div>
+
+<!-- 영상 해설 모달 -->
+<div class="modal-bg video-player-modal" id="m-video">
+  <div class="modal-card">
+    <div class="modal-hd">
+      <span class="modal-ttl" id="video-title-modal">영상 해설</span>
+      <button class="modal-x" onclick="closeModal('m-video')">×</button>
+    </div>
+    <div class="modal-bd">
+      <div class="video-player">
+        <div class="video-placeholder">
+          <div style="font-size:44px;margin-bottom:8px">🎬</div>
+          <div style="font-size:14px;font-weight:600;margin-bottom:4px">영상 해설</div>
+          <div style="font-size:11px;opacity:.7">실제 서비스에서는 명문대 선생님의<br>풀이 영상이 재생됩니다</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--g7);line-height:1.6;text-align:center;padding:8px">
+        💡 프리미엄 회원만 이용 가능한 기능입니다
+      </div>
+      <button class="btn-fill" onclick="closeModal('m-video');goTo('s-membership')">프리미엄 가입하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- D-Day 설정 모달 -->
+<div class="modal-bg" id="m-dday-edit">
+  <div class="modal-card">
+    <div class="modal-hd">
+      <span class="modal-ttl">시험일 설정</span>
+      <button class="modal-x" onclick="closeModal('m-dday-edit')">×</button>
+    </div>
+    <div class="modal-bd">
+      <div style="font-size:13px;color:var(--g7);margin-bottom:12px;line-height:1.5">
+        시험일을 설정하면 D-Day와 함께 매일 학습 알림을 받을 수 있어요
+      </div>
+      <div class="fg">
+        <div class="fl">시험 이름</div>
+        <input type="text" id="dday-name-input" placeholder="예: 1학기 중간고사" value="1학기 중간고사">
+      </div>
+      <div class="fg">
+        <div class="fl">시험 날짜</div>
+        <input type="date" id="dday-date-input">
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn-fill" onclick="saveDday()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 알림 센터 모달 -->
+<div class="modal-bg" id="m-notif">
+  <div class="modal-card">
+    <div class="modal-hd">
+      <span class="modal-ttl">🔔 알림</span>
+      <button class="modal-x" onclick="closeModal('m-notif')">×</button>
+    </div>
+    <div class="modal-bd" style="padding:0">
+      <div class="notif-list" id="notif-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 배지 상세 모달 -->
+<div class="modal-bg" id="m-badge">
+  <div class="modal-card">
+    <div class="modal-hd">
+      <span class="modal-ttl">배지</span>
+      <button class="modal-x" onclick="closeModal('m-badge')">×</button>
+    </div>
+    <div class="modal-bd" id="badge-detail-content"></div>
+  </div>
+</div>
+
+<!-- 배지 획득 토스트 (전역) -->
+<div class="badge-toast" id="badge-toast">
+  <div class="badge-toast-emoji" id="badge-toast-emoji">🎉</div>
+  <div>
+    <div style="font-size:11px;opacity:.9">새 배지 획득!</div>
+    <div id="badge-toast-name">배지 이름</div>
   </div>
 </div>
 
@@ -551,13 +1158,54 @@ input:focus,select:focus{border-color:var(--p2)}
 <div id="s-analy" class="screen">
   <div class="sub-hd">
     <button class="sub-back" onclick="goTo('s-dash')">‹</button>
-    <div class="sub-ttl">내 시험지 분석</div>
+    <div class="sub-ttl">우리 학교 시험지 분석</div>
   </div>
   <div class="analy-img-box" id="analy-img-box">
     <img id="analy-img-thumb" class="analy-img-thumb" alt="업로드한 시험지" style="display:none">
     <div class="analy-img-cap">📷 업로드한 시험지 원본</div>
   </div>
   <div class="analy-list" id="analy-list"></div>
+</div>
+
+<!-- 우리 학교 기출 풀어보기 화면 -->
+<div id="s-past-exam" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="confirmExitPastExam()">‹</button>
+    <div class="sub-ttl" id="past-exam-title">우리 학교 기출 풀어보기</div>
+  </div>
+  <div class="past-prog-bar"><div class="past-prog-fill" id="past-prog-fill" style="width:0%"></div></div>
+  <div class="past-prog-hd">
+    <div class="past-prog-info"><b id="past-cur">1</b> / <span id="past-total">10</span> 문항</div>
+  </div>
+  <div class="exam-body" id="past-exam-body"></div>
+  <div class="sub-area"><button class="btn-fill" onclick="submitPastExam()">답안 제출하기</button></div>
+</div>
+
+<!-- 우리 학교 기출 채점 결과 화면 -->
+<div id="s-past-result" class="screen">
+  <div class="sub-hd">
+    <button class="sub-back" onclick="goTo('s-analy')">‹</button>
+    <div class="sub-ttl">기출 채점 결과</div>
+  </div>
+  <div style="background:linear-gradient(135deg,var(--p2) 0%,var(--p1) 100%);color:#fff;padding:1.6rem 1.25rem;text-align:center">
+    <div style="font-size:11px;opacity:.85;margin-bottom:6px" id="past-result-meta">2024학년도 1학기 중간고사</div>
+    <div style="font-size:36px;font-weight:800;line-height:1" id="past-result-score">0<span style="font-size:16px;opacity:.85">점</span></div>
+    <div style="font-size:13px;margin-top:8px;opacity:.95" id="past-result-summary">10문항 중 0문항 정답</div>
+  </div>
+  <div class="rc-filter">
+    <button class="rc-fbtn active" id="past-fb-all" onclick="setPastFilter('all')">전체</button>
+    <button class="rc-fbtn" id="past-fb-wrong" onclick="setPastFilter('wrong')">틀린 문제만</button>
+    <button class="rc-fbtn" id="past-fb-right" onclick="setPastFilter('right')">맞힌 문제만</button>
+  </div>
+  <div id="past-result-cards" style="padding:0 1.25rem"></div>
+  <div style="padding:14px 1.25rem 24px">
+    <button class="try-cta" style="margin:0" onclick="goTo('s-mock-list')">
+      <div class="try-cta-ic">🎯</div>
+      <div class="try-cta-ttl">이제 모의고사로 실전 연습!</div>
+      <div class="try-cta-sub">기출을 풀어봤으니 비슷한 유형의 모의고사를 풀어보세요</div>
+    </button>
+    <button class="btn-ghost" style="margin-top:8px" onclick="goTo('s-analy')">기출 분석으로 돌아가기</button>
+  </div>
 </div>
 
 <!-- 모의고사 회차 선택 -->
@@ -998,11 +1646,20 @@ function goToReportFromDash(){
 
 // ========== 내 시험지 분석 ==========
 async function renderAnalysisScreen(){
-  // 업로드된 시험지 이미지들 표시
   const cached = getPaperAnalysis();
   const imgBox = document.getElementById('analy-img-box');
   const imagesArr = (cached && cached.images) ? cached.images : (uploadedImageDataUrl ? [uploadedImageDataUrl] : []);
+  const list = document.getElementById('analy-list');
 
+  // 시험지 미업로드 시: 학교 정보 기반 출제 경향 분석 화면
+  if (imagesArr.length === 0 && (!cached || !cached.questions || !cached.questions.length)) {
+    imgBox.style.display = 'none';
+    renderSchoolBasedAnalysis(list);
+    return;
+  }
+
+  // 시험지 업로드된 경우: 기존 흐름
+  imgBox.style.display = '';
   if (imagesArr.length > 0) {
     const imgsHtml = imagesArr.map((src, i) =>
       `<div style="display:inline-block;position:relative;margin:0 4px 6px">
@@ -1017,22 +1674,12 @@ async function renderAnalysisScreen(){
     imgBox.style.display = 'none';
   }
 
-  const list = document.getElementById('analy-list');
   // 이미 분석된 결과가 있으면 바로 표시
   if (cached && cached.questions && cached.questions.length) {
     renderAnalysisQuestions(cached.questions);
     return;
   }
-  // 업로드된 이미지가 없으면 안내
-  if (imagesArr.length === 0) {
-    list.innerHTML = `
-      <div class="analy-loading">
-        <div style="font-size:36px;margin-bottom:10px">📷</div>
-        <div class="analy-loading-text">업로드된 시험지가 없어요</div>
-        <div class="analy-loading-sub">시험 정보 입력 화면에서 시험지를 먼저 촬영해주세요</div>
-      </div>`;
-    return;
-  }
+
   // 분석 진행
   list.innerHTML = `
     <div class="analy-loading">
@@ -1068,6 +1715,497 @@ function generateDemoPaperQuestions(){
     answer: q.type === 'mc' ? `${NN[q.ans]} ${q.opts[q.ans]}` : q.ans,
     explanation: q.exp
   }));
+}
+
+// 매쓰홀릭 DB 기반 우리 학교 기출 데이터 (실제 서비스에서는 API 응답)
+const SCHOOL_EXAM_DATA = {
+  schoolName: '매쓰중학교',
+  grade: '중학교 1학년',
+  examType: '1학기 중간고사',
+  yearsCovered: 3,
+  examYear: '2024학년도',
+  examTitle: '1학기 중간고사',
+  totalQuestions: 10,
+  totalPoints: 100,
+  avgScore: 72,
+  // 기출 문제 - 매쓰홀릭 DB의 실제 작년 기출 (프로토는 더미)
+  questions: [
+    { num:1, type:'mc', text:'36을 소인수분해한 것으로 옳은 것은?', opts:['2³×3','2²×3²','2×3³','4×9','2×18'], ans:1, points:10, explanation:'36 = 2² × 3² 입니다. ④의 4와 9는 각각 2²과 3²이고, ⑤의 18은 2×3²이므로 모두 소인수분해가 아닙니다.' },
+    { num:2, type:'mc', text:'다음 중 소수(素數)가 아닌 것은?', opts:['2','7','11','15','17'], ans:3, points:10, explanation:'15 = 3×5로 두 소수의 곱이므로 소수가 아닙니다. 나머지는 모두 소수입니다.' },
+    { num:3, type:'sh', text:'2²×3×5의 약수의 개수를 구하시오.', ans:'12', points:10, explanation:'약수의 개수 = (지수+1)들의 곱 = (2+1)×(1+1)×(1+1) = 3×2×2 = 12개' },
+    { num:4, type:'mc', text:'다음 수 중 절댓값이 가장 큰 것은?', opts:['−5','+3','−4','+6','−2'], ans:3, points:10, explanation:'각 절댓값: |−5|=5, |+3|=3, |−4|=4, |+6|=6, |−2|=2. 가장 큰 것은 ④의 6입니다.' },
+    { num:5, type:'sh', text:'−3보다 크고 2 이하인 정수의 개수를 구하시오.', ans:'5', points:10, explanation:'−3 < x ≤ 2를 만족하는 정수는 −2, −1, 0, 1, 2로 모두 5개입니다.' },
+    { num:6, type:'sh', text:'(−6)+(−3)−(−7)을 계산하시오.', ans:'-2', points:10, explanation:'(−6)+(−3)−(−7) = −6−3+7 = −2' },
+    { num:7, type:'mc', text:'(−2)²×(−3)÷(+4)의 값으로 옳은 것은?', opts:['3','−3','12','−12','−6'], ans:1, points:10, explanation:'(−2)²=4, 4×(−3)=−12, −12÷4 = −3이므로 ②입니다.' },
+    { num:8, type:'mc', text:'x = −3일 때, 2x²−5x의 값은?', opts:['3','33','−33','18','0'], ans:1, points:10, explanation:'2×(−3)²−5×(−3) = 2×9+15 = 18+15 = 33이므로 ②입니다.' },
+    { num:9, type:'sh', text:'4x − 3(x − 2)를 간단히 하시오.', ans:'x+6', points:10, explanation:'4x − 3(x−2) = 4x − 3x + 6 = x + 6' },
+    { num:10, type:'mc', text:'어떤 수의 2배에서 3을 빼면 11이 된다. 어떤 수는?', opts:['5','6','7','8','9'], ans:2, points:10, explanation:'어떤 수를 x라 하면 2x − 3 = 11. 2x = 14이므로 x = 7. 답은 ③입니다.' }
+  ]
+};
+
+let pastExamAnswers = []; // 학생이 기출 풀 때 답안 저장
+let pastExamResultFilter = 'all';
+let pastExamCardExpanded = {};
+
+// 학교 정보 기반 분석 화면 (기출 보기 메인)
+function renderSchoolBasedAnalysis(list){
+  const data = SCHOOL_EXAM_DATA;
+
+  list.innerHTML = `
+    <!-- 학교 정보 헤더 -->
+    <div class="school-analy-hd">
+      <div class="school-analy-badge">📊 매쓰홀릭 DB 분석</div>
+      <div class="school-analy-school">${data.schoolName}</div>
+      <div class="school-analy-meta">${data.grade} · ${data.examType}</div>
+      <div class="school-analy-source">최근 ${data.yearsCovered}년 기출 종합 분석</div>
+    </div>
+
+    <!-- 출제 경향 분석 (간략) -->
+    <div class="analy-section">
+      <div class="analy-section-ttl">🎯 출제 경향 분석</div>
+      <div class="trend-card">
+        <div class="trend-row">
+          <div class="trend-label">난이도</div>
+          <div class="trend-bars">
+            <div class="trend-bar" style="background:#3DD68C;flex:1"></div>
+            <div class="trend-bar" style="background:#FFD43B;flex:1.5"></div>
+            <div class="trend-bar" style="background:#FF6B6B;flex:.7"></div>
+          </div>
+          <div class="trend-tag">중상</div>
+        </div>
+        <div class="trend-row">
+          <div class="trend-label">서술형</div>
+          <div class="trend-bars">
+            <div class="trend-bar" style="background:#3DD68C;flex:.7"></div>
+            <div class="trend-bar" style="background:var(--g3);flex:2.3"></div>
+          </div>
+          <div class="trend-tag">25%</div>
+        </div>
+        <div class="trend-row">
+          <div class="trend-label">계산</div>
+          <div class="trend-bars">
+            <div class="trend-bar" style="background:#3DD68C;flex:1.8"></div>
+            <div class="trend-bar" style="background:var(--g3);flex:1.2"></div>
+          </div>
+          <div class="trend-tag">60%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 우리 학교 기출 보기 (메인 콘텐츠!) -->
+    <div class="analy-section">
+      <div class="analy-section-ttl">📝 우리 학교 기출 보기</div>
+      <div class="past-exam-wrap">
+        <div class="past-exam-hd">
+          <div class="past-exam-tag">${data.examYear} ${data.examTitle}</div>
+          <div class="past-exam-info">${data.schoolName} · ${data.totalQuestions}문항 · ${data.totalPoints}점 · 평균 ${data.avgScore}점</div>
+        </div>
+        <div class="past-exam-controls">
+          <button class="past-ctrl-btn" onclick="expandAllPastQs()">모두 펼치기</button>
+          <button class="past-ctrl-btn" onclick="collapseAllPastQs()">모두 접기</button>
+        </div>
+        <div id="past-exam-list">
+          ${data.questions.slice(0, 3).map(q => renderPastQuestion(q)).join('')}
+        </div>
+        ${data.questions.length > 3 ? `
+        <div id="past-exam-list-more" style="display:none">
+          ${data.questions.slice(3).map(q => renderPastQuestion(q)).join('')}
+        </div>
+        <button class="past-show-more" id="past-show-more-btn" onclick="togglePastShowMore()">
+          <span id="past-show-more-text">+ ${data.questions.length - 3}문항 더보기</span>
+          <span class="past-show-more-arrow" id="past-show-more-arrow">▼</span>
+        </button>` : ''}
+      </div>
+
+      <!-- 풀어보기 시작 CTA -->
+      <button class="try-cta" onclick="startPastExam()">
+        <div class="try-cta-ic">✏️</div>
+        <div class="try-cta-ttl">우리 학교 기출 풀어보기</div>
+        <div class="try-cta-sub">${data.totalQuestions}문항을 시험처럼 풀어보고 채점받아 보세요</div>
+      </button>
+    </div>
+
+    <!-- 부가 분석 더보기 (아코디언) -->
+    <button class="extra-analy-toggle" onclick="toggleExtraAnaly()" id="extra-analy-toggle-btn">
+      <span style="display:flex;align-items:center;gap:6px">
+        <span>📊</span>
+        <span>더 자세한 분석 보기</span>
+      </span>
+      <span class="extra-analy-arrow" id="extra-analy-arrow">▼</span>
+    </button>
+    <div class="extra-analy-section" id="extra-analy-section">
+
+      <!-- 단원별 출제 비중 -->
+      <div class="analy-section">
+        <div class="analy-section-ttl">📚 단원별 출제 비중</div>
+        <div class="unit-weight-list">
+          <div class="unit-weight-row">
+            <div class="unit-weight-name">1. 소인수분해</div>
+            <div class="unit-weight-bar"><div class="unit-weight-fill" style="width:35%"></div></div>
+            <div class="unit-weight-pct">35%</div>
+          </div>
+          <div class="unit-weight-row">
+            <div class="unit-weight-name">2. 정수와 유리수</div>
+            <div class="unit-weight-bar"><div class="unit-weight-fill" style="width:30%"></div></div>
+            <div class="unit-weight-pct">30%</div>
+          </div>
+          <div class="unit-weight-row">
+            <div class="unit-weight-name">3. 문자와 식</div>
+            <div class="unit-weight-bar"><div class="unit-weight-fill" style="width:25%"></div></div>
+            <div class="unit-weight-pct">25%</div>
+          </div>
+          <div class="unit-weight-row">
+            <div class="unit-weight-name">4. 좌표평면과 그래프</div>
+            <div class="unit-weight-bar"><div class="unit-weight-fill" style="width:10%"></div></div>
+            <div class="unit-weight-pct">10%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 빈출 유형 TOP 5 -->
+      <div class="analy-section">
+        <div class="analy-section-ttl">🔥 빈출 유형 TOP 5</div>
+        <div class="freq-list">
+          <div class="freq-row">
+            <div class="freq-rank gold">1</div>
+            <div class="freq-body">
+              <div class="freq-name">소인수분해의 약수 구하기</div>
+              <div class="freq-meta">최근 3년간 매년 출제 · 평균 배점 8점</div>
+            </div>
+            <div class="freq-rate">100%</div>
+          </div>
+          <div class="freq-row">
+            <div class="freq-rank silver">2</div>
+            <div class="freq-body">
+              <div class="freq-name">절댓값과 수의 대소 관계</div>
+              <div class="freq-meta">최근 3년간 매년 출제 · 평균 배점 6점</div>
+            </div>
+            <div class="freq-rate">100%</div>
+          </div>
+          <div class="freq-row">
+            <div class="freq-rank bronze">3</div>
+            <div class="freq-body">
+              <div class="freq-name">정수와 유리수의 사칙연산</div>
+              <div class="freq-meta">3년 중 3회 출제 · 평균 배점 10점</div>
+            </div>
+            <div class="freq-rate">100%</div>
+          </div>
+          <div class="freq-row">
+            <div class="freq-rank">4</div>
+            <div class="freq-body">
+              <div class="freq-name">문자식의 값 구하기</div>
+              <div class="freq-meta">3년 중 2회 출제 · 평균 배점 7점</div>
+            </div>
+            <div class="freq-rate">67%</div>
+          </div>
+          <div class="freq-row">
+            <div class="freq-rank">5</div>
+            <div class="freq-body">
+              <div class="freq-name">일차방정식의 활용</div>
+              <div class="freq-meta">3년 중 2회 출제 · 평균 배점 8점</div>
+            </div>
+            <div class="freq-rate">67%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI 학습 추천 -->
+      <div class="analy-section">
+        <div class="analy-section-ttl">💡 AI 학습 추천</div>
+        <div class="ai-rec-card">
+          <div class="ai-rec-row">
+            <div class="ai-rec-ic">🎯</div>
+            <div class="ai-rec-text">우리 학교는 <b>소인수분해</b>와 <b>정수의 사칙연산</b>이 매년 빠지지 않고 출제돼요</div>
+          </div>
+          <div class="ai-rec-row">
+            <div class="ai-rec-ic">📈</div>
+            <div class="ai-rec-text">계산형 문제 비중이 60%로 높으니 <b>실수 없이 빠르게</b> 푸는 연습이 중요해요</div>
+          </div>
+          <div class="ai-rec-row">
+            <div class="ai-rec-ic">✏️</div>
+            <div class="ai-rec-text">서술형은 평균 25%, <b>풀이 과정을 단정하게 쓰는 연습</b>도 필요해요</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 기출 문제 한 개 렌더 (접힌 상태)
+function renderPastQuestion(q){
+  const optsHtml = q.type === 'mc' ? `
+    <div class="past-q-opts">
+      ${q.opts.map((o, i) => `<div class="past-q-opt">${NN[i]} ${o}</div>`).join('')}
+    </div>` : '';
+  const ansText = q.type === 'mc' ? `${NN[q.ans]} ${q.opts[q.ans]}` : q.ans;
+  return `
+    <div class="past-q-item">
+      <div class="past-q-head" onclick="togglePastQ(${q.num})" id="past-q-head-${q.num}">
+        <div class="past-q-num">${q.num}번</div>
+        <div class="past-q-text">${q.text}</div>
+        <div class="past-q-arrow">▼</div>
+      </div>
+      <div class="past-q-body" id="past-q-body-${q.num}">
+        <div class="past-q-body-inner">
+          <div class="past-q-full">${q.text}</div>
+          ${optsHtml}
+          <div class="past-q-ans-row">
+            <div class="past-q-ans-lbl">정답</div>
+            <div class="past-q-ans-val">${ansText}</div>
+          </div>
+          <div class="past-q-exp">
+            <div class="past-q-exp-hdr">💡 해설</div>
+            ${q.explanation}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function togglePastQ(num){
+  const head = document.getElementById('past-q-head-' + num);
+  const body = document.getElementById('past-q-body-' + num);
+  if (!head || !body) return;
+  head.classList.toggle('expanded');
+  body.classList.toggle('expanded');
+}
+function togglePastShowMore(){
+  const more = document.getElementById('past-exam-list-more');
+  const text = document.getElementById('past-show-more-text');
+  const arrow = document.getElementById('past-show-more-arrow');
+  if (!more) return;
+  const isHidden = more.style.display === 'none';
+  if (isHidden) {
+    more.style.display = 'block';
+    if (text) text.textContent = '접기';
+    if (arrow) arrow.style.transform = 'rotate(180deg)';
+  } else {
+    more.style.display = 'none';
+    const hiddenCount = SCHOOL_EXAM_DATA.questions.length - 3;
+    if (text) text.textContent = `+ ${hiddenCount}문항 더보기`;
+    if (arrow) arrow.style.transform = '';
+  }
+}
+
+function expandAllPastQs(){
+  // 숨겨진 영역도 자동으로 펼치기
+  const more = document.getElementById('past-exam-list-more');
+  if (more && more.style.display === 'none') togglePastShowMore();
+  SCHOOL_EXAM_DATA.questions.forEach(q => {
+    const head = document.getElementById('past-q-head-' + q.num);
+    const body = document.getElementById('past-q-body-' + q.num);
+    if (head && body) {
+      head.classList.add('expanded');
+      body.classList.add('expanded');
+    }
+  });
+}
+function collapseAllPastQs(){
+  SCHOOL_EXAM_DATA.questions.forEach(q => {
+    const head = document.getElementById('past-q-head-' + q.num);
+    const body = document.getElementById('past-q-body-' + q.num);
+    if (head && body) {
+      head.classList.remove('expanded');
+      body.classList.remove('expanded');
+    }
+  });
+}
+function toggleExtraAnaly(){
+  const sec = document.getElementById('extra-analy-section');
+  const btn = document.getElementById('extra-analy-toggle-btn');
+  if (sec && btn) {
+    sec.classList.toggle('expanded');
+    btn.classList.toggle('expanded');
+  }
+}
+
+// ========== 우리 학교 기출 풀어보기 ==========
+function startPastExam(){
+  pastExamAnswers = new Array(SCHOOL_EXAM_DATA.questions.length).fill(null);
+  document.getElementById('past-total').textContent = SCHOOL_EXAM_DATA.questions.length;
+  document.getElementById('past-exam-title').textContent = `${SCHOOL_EXAM_DATA.examYear} ${SCHOOL_EXAM_DATA.examTitle}`;
+  renderPastExamBody();
+  goTo('s-past-exam');
+}
+
+function renderPastExamBody(){
+  const body = document.getElementById('past-exam-body');
+  const html = SCHOOL_EXAM_DATA.questions.map((q, i) => {
+    let inputHtml;
+    if (q.type === 'mc') {
+      const optsHtml = q.opts.map((o, j) => {
+        const sel = pastExamAnswers[i] === j ? 'sel' : '';
+        return `<div class="opt ${sel}" onclick="selectPastOpt(${i},${j})" id="po${i}_${j}">
+          <div class="onum" id="pon${i}_${j}" style="${sel ? 'background:var(--p2);border-color:var(--p2);color:var(--g0)' : ''}">${NN[j]}</div>
+          <span>${o}</span>
+        </div>`;
+      }).join('');
+      inputHtml = `<div class="opts">${optsHtml}</div>`;
+    } else {
+      const val = pastExamAnswers[i] || '';
+      inputHtml = `<input class="sinput" type="text" placeholder="답을 입력하세요" id="psi${i}" value="${val}" oninput="updatePastShortAnswer(${i},this.value)">`;
+    }
+    return `<div class="qcard">
+      <div class="q-head">
+        <div class="qnum">${q.num}</div>
+        <span style="font-size:12px;font-weight:600;color:var(--p1)">우리 학교 기출</span>
+        <span class="qtag">${q.type === 'mc' ? '객관식' : '주관식'}</span>
+        <span class="qpts">${q.points}점</span>
+      </div>
+      <div class="qtext">${q.text}</div>
+      ${inputHtml}
+    </div>`;
+  }).join('');
+  body.innerHTML = html;
+  updatePastProgress();
+}
+
+function selectPastOpt(qIdx, optIdx){
+  pastExamAnswers[qIdx] = optIdx;
+  // 시각 피드백 - 기존 시험과 동일한 방식
+  const q = SCHOOL_EXAM_DATA.questions[qIdx];
+  q.opts.forEach((_, j) => {
+    const el = document.getElementById(`po${qIdx}_${j}`);
+    const nm = document.getElementById(`pon${qIdx}_${j}`);
+    if (!el || !nm) return;
+    const isSel = j === optIdx;
+    el.classList.toggle('sel', isSel);
+    nm.style.background = isSel ? 'var(--p2)' : '';
+    nm.style.borderColor = isSel ? 'var(--p2)' : '';
+    nm.style.color = isSel ? 'var(--g0)' : '';
+  });
+  updatePastProgress();
+}
+
+function updatePastShortAnswer(qIdx, val){
+  pastExamAnswers[qIdx] = val.replace(/\s/g, '').toLowerCase();
+  updatePastProgress();
+}
+function updatePastProgress(){
+  const answered = pastExamAnswers.filter(a => a !== null && a !== undefined && a !== '').length;
+  const total = SCHOOL_EXAM_DATA.questions.length;
+  const cur = document.getElementById('past-cur');
+  const fill = document.getElementById('past-prog-fill');
+  if (cur) cur.textContent = answered;
+  if (fill) fill.style.width = (answered / total * 100) + '%';
+}
+
+function confirmExitPastExam(){
+  const answered = pastExamAnswers.filter(a => a !== null && a !== undefined && a !== '').length;
+  if (answered > 0) {
+    if (!confirm('지금까지 답안이 사라져요. 정말 나가시겠어요?')) return;
+  }
+  goTo('s-analy');
+}
+
+function submitPastExam(){
+  // 주관식 input 값 마지막으로 한 번 더 수집
+  SCHOOL_EXAM_DATA.questions.forEach((q, i) => {
+    if (q.type === 'sh') {
+      const el = document.getElementById('psi' + i);
+      if (el) pastExamAnswers[i] = el.value.replace(/\s/g, '').toLowerCase();
+    }
+  });
+  // 미응답 체크
+  const unanswered = pastExamAnswers.filter(a => a === null || a === undefined || a === '').length;
+  if (unanswered > 0) {
+    if (!confirm(`${unanswered}문항이 미응답입니다. 그래도 제출하시겠어요?`)) return;
+  }
+  goTo('s-past-result');
+  recordStudy(); // streak 기록
+}
+
+function checkPastAnswer(q, ua){
+  if (ua === null || ua === undefined || ua === '') return false;
+  if (q.type === 'mc') return ua === q.ans;
+  return String(ua).replace(/\s/g, '').toLowerCase() === String(q.ans).replace(/\s/g, '').toLowerCase();
+}
+
+function renderPastResult(){
+  let score = 0, correct = 0;
+  SCHOOL_EXAM_DATA.questions.forEach((q, i) => {
+    if (checkPastAnswer(q, pastExamAnswers[i])) {
+      score += q.points;
+      correct++;
+    }
+  });
+  const total = SCHOOL_EXAM_DATA.questions.length;
+  document.getElementById('past-result-meta').textContent = `${SCHOOL_EXAM_DATA.examYear} ${SCHOOL_EXAM_DATA.examTitle}`;
+  document.getElementById('past-result-score').innerHTML = `${score}<span style="font-size:16px;opacity:.85">점</span>`;
+  document.getElementById('past-result-summary').textContent = `${total}문항 중 ${correct}문항 정답`;
+
+  // 틀린 문제 자동 펼침
+  pastExamCardExpanded = {};
+  SCHOOL_EXAM_DATA.questions.forEach((q, i) => {
+    if (!checkPastAnswer(q, pastExamAnswers[i])) pastExamCardExpanded[i] = true;
+  });
+  pastExamResultFilter = 'all';
+  ['all','wrong','right'].forEach(k => {
+    const btn = document.getElementById('past-fb-' + k);
+    if (btn) btn.classList.toggle('active', k === 'all');
+  });
+  renderPastResultCards();
+}
+
+function setPastFilter(f){
+  pastExamResultFilter = f;
+  ['all','wrong','right'].forEach(k => {
+    document.getElementById('past-fb-' + k).classList.toggle('active', k === f);
+  });
+  renderPastResultCards();
+}
+
+function togglePastResultCard(i){
+  pastExamCardExpanded[i] = !pastExamCardExpanded[i];
+  renderPastResultCards();
+}
+
+function renderPastResultCards(){
+  const list = SCHOOL_EXAM_DATA.questions
+    .map((q, i) => ({ q, i, ok: checkPastAnswer(q, pastExamAnswers[i]) }))
+    .filter(({ ok }) => {
+      if (pastExamResultFilter === 'wrong') return !ok;
+      if (pastExamResultFilter === 'right') return ok;
+      return true;
+    });
+  if (list.length === 0) {
+    document.getElementById('past-result-cards').innerHTML =
+      `<div style="text-align:center;padding:2rem 0;color:var(--g5);font-size:13px">해당하는 문제가 없습니다</div>`;
+    return;
+  }
+  const html = list.map(({ q, i, ok }) => {
+    const ua = pastExamAnswers[i];
+    const hasAns = !(ua === null || ua === undefined || ua === '');
+    const expanded = pastExamCardExpanded[i];
+    let bodyHtml = '';
+    if (q.type === 'mc') {
+      const optsHtml = q.opts.map((o, j) => {
+        let cls = 'rc-opt', mark = '';
+        if (j === q.ans) { cls += ' is-correct'; mark = '<span class="rc-opt-mark rc-mark-ans">정답</span>'; }
+        if (hasAns && j === ua && j !== q.ans) { cls += ' is-my-wrong'; mark = '<span class="rc-opt-mark rc-mark-mine">내 답</span>'; }
+        return `<div class="${cls}"><div class="rc-opt-num">${NN[j]}</div><span>${o}</span>${mark}</div>`;
+      }).join('');
+      bodyHtml = `<div class="rc-qtext">${q.text}</div><div class="rc-opts">${optsHtml}</div>`;
+    } else {
+      const myTxt = hasAns ? ua : '미응답';
+      bodyHtml = `
+        <div class="rc-qtext">${q.text}</div>
+        <div class="rc-sh-ans">
+          <div class="rc-sh-line"><span class="rc-sh-lbl">내 답</span><span class="${ok ? 'rc-sh-ok' : 'rc-sh-my'}">${myTxt}</span></div>
+          <div class="rc-sh-line"><span class="rc-sh-lbl">정답</span><span class="rc-sh-ok">${q.ans}</span></div>
+        </div>`;
+    }
+    return `<div class="rc ${ok ? 'rc-ok' : 'rc-no'}">
+      <div class="rc-head" onclick="togglePastResultCard(${i})">
+        <div class="qnum" style="background:${ok ? 'var(--p2)' : 'var(--danger)'}">${q.num}</div>
+        <div class="rc-title">${q.text.length > 26 ? q.text.substring(0, 26) + '…' : q.text}</div>
+        <span class="rtag ${ok ? 'tok' : 'tno'}">${ok ? '정답' : '오답'}</span>
+        <span class="rc-toggle ${expanded ? 'open' : ''}">▾</span>
+      </div>
+      ${expanded ? `<div class="rc-body">${bodyHtml}<div class="rc-exp-box"><div class="rc-exp-hdr">💡 해설</div><div class="rc-exp-txt">${q.explanation}</div></div></div>` : ''}
+    </div>`;
+  }).join('');
+  document.getElementById('past-result-cards').innerHTML = html;
 }
 
 function renderAnalysisQuestions(questions){
@@ -1218,9 +2356,7 @@ function startMockRound(round){
   currentMockRound = round;
   const history = getMockHistory();
   const diff = calcAdaptiveDifficulty(history, round);
-  // 난이도에 맞게 문항 생성 (현재 프로토는 기존 QS 재사용 + 난이도 표시)
-  // 실제 서비스에서는 여기서 Claude API로 새 문항 생성 호출
-  // 응시 시작 화면(s-start)으로 이동 (회차/난이도 정보 표시)
+  // 모의고사 시작 화면(s-start)으로 이동
   goToMockStart(round, diff);
 }
 
@@ -2185,6 +3321,598 @@ function showReport(){
   document.getElementById('g-tgt').textContent=g>1?`+${(g-1)*10}점`:'달성!';
   renderUnitAnalysis();
 }
+
+
+// ========== 새 기능 데이터 키 ==========
+const THEME_KEY = 'matholic_theme_v1';
+const DDAY_KEY = 'matholic_dday_v1';
+const STREAK_KEY = 'matholic_streak_v1';
+const BADGE_KEY = 'matholic_badges_v1';
+const NOTIF_KEY = 'matholic_notifs_v1';
+const ROLE_KEY = 'matholic_role_v1';
+const MEMBER_KEY = 'matholic_member_v1';
+
+// ========== 1. 다크모드 ==========
+function initTheme(){
+  const saved = localStorage.getItem(THEME_KEY) || 'light';
+  applyTheme(saved);
+}
+function applyTheme(mode){
+  if (mode === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    const btn = document.getElementById('theme-toggle-btn');
+    if (btn) btn.textContent = '☀️';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    const btn = document.getElementById('theme-toggle-btn');
+    if (btn) btn.textContent = '🌙';
+  }
+  localStorage.setItem(THEME_KEY, mode);
+}
+function toggleTheme(){
+  const cur = localStorage.getItem(THEME_KEY) || 'light';
+  applyTheme(cur === 'light' ? 'dark' : 'light');
+}
+
+// ========== 2. D-Day ==========
+function getDday(){
+  try { return JSON.parse(localStorage.getItem(DDAY_KEY) || 'null'); }
+  catch(e) { return null; }
+}
+function setDday(data){ localStorage.setItem(DDAY_KEY, JSON.stringify(data)); }
+
+function renderDday(){
+  const dday = getDday();
+  const chip = document.getElementById('hero-dday-chip');
+  const text = document.getElementById('hero-dday-text');
+  if (!chip || !text) return;
+  chip.classList.remove('urgent');
+  if (!dday || !dday.date) {
+    text.textContent = '시험일 설정';
+    return;
+  }
+  const target = new Date(dday.date);
+  const today = new Date();
+  today.setHours(0,0,0,0); target.setHours(0,0,0,0);
+  const diff = Math.round((target - today) / 86400000);
+  if (diff > 0) {
+    text.textContent = `D-${diff}`;
+    if (diff <= 7) chip.classList.add('urgent');
+  } else if (diff === 0) {
+    text.textContent = 'D-DAY';
+    chip.classList.add('urgent');
+  } else {
+    text.textContent = '시험 종료';
+  }
+}
+
+function saveDday(){
+  const name = document.getElementById('dday-name-input').value.trim() || '1학기 중간고사';
+  const date = document.getElementById('dday-date-input').value;
+  if (!date) { alert('시험 날짜를 선택해주세요'); return; }
+  setDday({ name, date });
+  renderDday();
+  closeModal('m-dday-edit');
+  addNotif('schedule', '시험일이 등록됐어요', `${name} - ${date}`);
+}
+
+// ========== 3. 연속 학습일 (Streak) ==========
+function getStreak(){
+  try { return JSON.parse(localStorage.getItem(STREAK_KEY) || '{"days":0,"lastDate":null}'); }
+  catch(e) { return { days: 0, lastDate: null }; }
+}
+function setStreak(data){ localStorage.setItem(STREAK_KEY, JSON.stringify(data)); }
+
+function recordStudy(){
+  // 모의고사 응시 등 학습 활동 시 호출
+  const today = new Date().toISOString().split('T')[0];
+  const streak = getStreak();
+  if (streak.lastDate === today) return; // 이미 오늘 기록됨
+  const yest = new Date(); yest.setDate(yest.getDate() - 1);
+  const yestStr = yest.toISOString().split('T')[0];
+  if (streak.lastDate === yestStr) {
+    streak.days++;
+  } else {
+    streak.days = 1;
+  }
+  streak.lastDate = today;
+  setStreak(streak);
+  // 배지 체크
+  checkAndAwardBadges();
+}
+
+function renderStreak(){
+  const s = getStreak();
+  const today = new Date().toISOString().split('T')[0];
+  let displayDays = s.days;
+  if (s.lastDate) {
+    const yest = new Date(); yest.setDate(yest.getDate() - 1);
+    const yestStr = yest.toISOString().split('T')[0];
+    if (s.lastDate !== today && s.lastDate !== yestStr) {
+      displayDays = 0;
+    }
+  } else {
+    displayDays = 0;
+  }
+  // hero 칩에 표시
+  const heroText = document.getElementById('hero-streak-text');
+  if (heroText) heroText.textContent = `${displayDays}일 연속`;
+  // 배지 화면용
+  const days2 = document.getElementById('badge-streak-days');
+  if (days2) days2.textContent = displayDays;
+  let msg;
+  if (displayDays === 0) msg = '오늘 학습을 시작해보세요!';
+  else if (displayDays < 3) msg = '꾸준함이 실력을 만들어요. 화이팅!';
+  else if (displayDays < 7) msg = `${displayDays}일째 진행 중! 일주일까지 며칠 남았어요`;
+  else if (displayDays < 30) msg = `훌륭해요! ${displayDays}일 연속 학습`;
+  else msg = `🏆 ${displayDays}일 연속! 진정한 학습 마스터!`;
+  const m2 = document.getElementById('badge-streak-msg');
+  if (m2) m2.textContent = msg;
+}
+
+// ========== 4. 배지 시스템 ==========
+const BADGES = [
+  { id:'first_login', emoji:'🎉', name:'첫 발걸음', desc:'매쓰홀릭에 오신 것을 환영해요!', check:()=>true },
+  { id:'first_exam', emoji:'📝', name:'첫 시험', desc:'첫 모의고사를 응시했어요', check:()=>getMockHistory().filter(h=>h&&h.score!==undefined).length >= 1 },
+  { id:'three_exam', emoji:'🎯', name:'시험 3회 완주', desc:'모의고사를 3회 완료했어요', check:()=>getMockHistory().filter(h=>h&&h.score!==undefined).length >= 3 },
+  { id:'all_exam', emoji:'🏆', name:'완전 정복', desc:'모의고사 10회 모두 완료했어요', check:()=>getMockHistory().filter(h=>h&&h.score!==undefined).length >= 10 },
+  { id:'high_score', emoji:'⭐', name:'고득점자', desc:'모의고사에서 90점 이상 받았어요', check:()=>{const h=getMockHistory();return h.some(r=>r&&r.score>=90);} },
+  { id:'perfect', emoji:'💯', name:'만점왕', desc:'모의고사에서 100점을 받았어요', check:()=>{const h=getMockHistory();return h.some(r=>r&&r.score===100);} },
+  { id:'streak_3', emoji:'🔥', name:'3일 연속', desc:'3일 연속 학습했어요', check:()=>getStreak().days >= 3 },
+  { id:'streak_7', emoji:'🔥🔥', name:'일주일 도전', desc:'7일 연속 학습했어요', check:()=>getStreak().days >= 7 },
+  { id:'streak_30', emoji:'👑', name:'한 달 연속', desc:'30일 연속 학습! 진정한 마스터', check:()=>getStreak().days >= 30 },
+  { id:'paper_upload', emoji:'📷', name:'시험지 업로드', desc:'학교 시험지를 업로드했어요', check:()=>{const p=getPaperAnalysis();return p&&(p.image||p.images);} },
+  { id:'analysis_done', emoji:'🔍', name:'분석 완료', desc:'시험지 AI 분석을 완료했어요', check:()=>{const p=getPaperAnalysis();return p&&p.questions&&p.questions.length>0;} },
+  { id:'improver', emoji:'📈', name:'성장하는 자', desc:'이전 회차보다 점수가 올랐어요', check:()=>{const h=getMockHistory().filter(r=>r&&r.score!==undefined);if(h.length<2)return false;return h.some((r,i)=>i>0&&r.score>h[i-1].score);} },
+];
+
+function getEarnedBadges(){
+  try { return JSON.parse(localStorage.getItem(BADGE_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function setEarnedBadges(arr){ localStorage.setItem(BADGE_KEY, JSON.stringify(arr)); }
+
+function checkAndAwardBadges(){
+  const earned = getEarnedBadges();
+  const newBadges = [];
+  BADGES.forEach(b => {
+    if (!earned.includes(b.id) && b.check()) {
+      earned.push(b.id);
+      newBadges.push(b);
+    }
+  });
+  if (newBadges.length > 0) {
+    setEarnedBadges(earned);
+    // 토스트 표시 (여러 개면 순차)
+    newBadges.forEach((b, i) => {
+      setTimeout(() => showBadgeToast(b), i * 2500);
+    });
+    // 알림에도 추가
+    newBadges.forEach(b => addNotif('badge', '새 배지 획득!', `${b.emoji} ${b.name} - ${b.desc}`));
+  }
+}
+
+function showBadgeToast(badge){
+  const toast = document.getElementById('badge-toast');
+  if (!toast) return;
+  document.getElementById('badge-toast-emoji').textContent = badge.emoji;
+  document.getElementById('badge-toast-name').textContent = badge.name;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+function renderBadgesScreen(){
+  const earned = getEarnedBadges();
+  document.getElementById('badge-earned-count').textContent = earned.length;
+  document.getElementById('badge-total-count').textContent = BADGES.length;
+  const html = BADGES.map(b => {
+    const isEarned = earned.includes(b.id);
+    return `<button class="badge-tile ${isEarned ? 'earned' : 'locked'}" onclick="showBadgeDetail('${b.id}')">
+      <div class="badge-emoji">${b.emoji}</div>
+      <div class="badge-name">${b.name}</div>
+    </button>`;
+  }).join('');
+  document.getElementById('badges-grid').innerHTML = html;
+}
+
+function showBadgeDetail(id){
+  const badge = BADGES.find(b => b.id === id);
+  if (!badge) return;
+  const earned = getEarnedBadges().includes(id);
+  document.getElementById('badge-detail-content').innerHTML = `
+    <div class="badge-detail">
+      <div class="badge-detail-emoji">${badge.emoji}</div>
+      <div class="badge-detail-name">${badge.name}</div>
+      <div class="badge-detail-desc">${badge.desc}</div>
+      <div class="badge-detail-status ${earned ? 'earned' : 'locked'}">
+        ${earned ? '✓ 획득 완료' : '🔒 미획득'}
+      </div>
+    </div>`;
+  openModal('m-badge');
+}
+
+function updateBadgeSummary(){
+  const el = document.getElementById('badges-summary');
+  if (!el) return;
+  const earned = getEarnedBadges();
+  el.textContent = `${earned.length} / ${BADGES.length}개 획득 · 탭하여 확인`;
+}
+
+// ========== 5. 알림 시스템 ==========
+function getNotifs(){
+  try { return JSON.parse(localStorage.getItem(NOTIF_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function setNotifs(arr){ localStorage.setItem(NOTIF_KEY, JSON.stringify(arr)); }
+
+function addNotif(type, title, msg){
+  const notifs = getNotifs();
+  notifs.unshift({
+    id: Date.now() + Math.random(),
+    type, title, msg,
+    read: false,
+    time: Date.now()
+  });
+  // 최대 30개까지만 보관
+  while (notifs.length > 30) notifs.pop();
+  setNotifs(notifs);
+  renderNotifBadge();
+}
+
+function renderNotifBadge(){
+  const notifs = getNotifs();
+  const unread = notifs.filter(n => !n.read).length;
+  const badge = document.getElementById('notif-badge');
+  if (!badge) return;
+  if (unread > 0) {
+    badge.textContent = unread > 99 ? '99+' : unread;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderNotifList(){
+  const notifs = getNotifs();
+  const list = document.getElementById('notif-list');
+  if (!list) return;
+  if (notifs.length === 0) {
+    list.innerHTML = '<div class="notif-empty">알림이 없어요</div>';
+    return;
+  }
+  const icons = { schedule:'📅', badge:'🏅', exam:'📝', report:'📊', tip:'💡', system:'⚙️' };
+  list.innerHTML = notifs.map(n => {
+    const icon = icons[n.type] || '🔔';
+    const ago = formatTimeAgo(n.time);
+    return `<div class="notif-item ${n.read ? '' : 'unread'}" onclick="markNotifRead(${n.id})">
+      <div class="notif-ic">${icon}</div>
+      <div class="notif-body">
+        <div class="notif-ttl">${n.title}</div>
+        <div class="notif-msg">${n.msg}</div>
+        <div class="notif-time">${ago}</div>
+      </div>
+    </div>`;
+  }).join('');
+  // 모달 열렸을 때 모두 읽음 처리
+  notifs.forEach(n => n.read = true);
+  setNotifs(notifs);
+  setTimeout(renderNotifBadge, 800);
+}
+function markNotifRead(id){
+  const notifs = getNotifs();
+  const n = notifs.find(x => x.id === id);
+  if (n) { n.read = true; setNotifs(notifs); }
+  renderNotifBadge();
+}
+
+function formatTimeAgo(ts){
+  const diff = Date.now() - ts;
+  if (diff < 60000) return '방금 전';
+  if (diff < 3600000) return `${Math.floor(diff/60000)}분 전`;
+  if (diff < 86400000) return `${Math.floor(diff/3600000)}시간 전`;
+  if (diff < 604800000) return `${Math.floor(diff/86400000)}일 전`;
+  return new Date(ts).toLocaleDateString('ko-KR');
+}
+
+// ========== 6. 학부모 모드 ==========
+function getRole(){ return localStorage.getItem(ROLE_KEY) || 'student'; }
+function switchRole(role){
+  // 학생 모드만 사용. 학부모 모드는 별도 메뉴로 분리될 예정.
+  localStorage.setItem(ROLE_KEY, 'student');
+  const studEl = document.getElementById('dash-student-mode');
+  const parEl = document.getElementById('dash-parent-mode');
+  const studBtn = document.getElementById('role-student');
+  const parBtn = document.getElementById('role-parent');
+  if (studEl) studEl.style.display = 'block';
+  if (parEl) parEl.style.display = 'none';
+  if (studBtn) studBtn.classList.add('active');
+  if (parBtn) parBtn.classList.remove('active');
+}
+
+function renderParentMode(){
+  const history = getMockHistory().filter(r => r && r.score !== undefined);
+  const streak = getStreak();
+  const completed = history.length;
+  const avg = completed > 0 ? Math.round(history.reduce((a,b)=>a+b.score,0)/completed) : '-';
+  // 평균 30분/회차로 가정
+  const totalTime = completed * 30;
+
+  document.getElementById('parent-stat-rounds').textContent = completed;
+  document.getElementById('parent-stat-streak').textContent = streak.days || 0;
+  document.getElementById('parent-stat-avg').textContent = avg;
+  document.getElementById('parent-stat-time').innerHTML = totalTime + '<small style="font-size:11px">분</small>';
+
+  // 점수 추이 차트
+  const trendEl = document.getElementById('parent-trend');
+  const msgEl = document.getElementById('parent-trend-msg');
+  if (history.length === 0) {
+    trendEl.innerHTML = '';
+    msgEl.textContent = '모의고사를 응시하면 점수 추이가 표시됩니다';
+  } else {
+    const maxScore = 100;
+    const bars = history.slice(0, 10).map((r, i) => {
+      const heightPct = (r.score / maxScore) * 100;
+      return `<div class="parent-trend-bar" style="height:${Math.max(heightPct, 6)}%">
+        <div class="parent-trend-bar-lbl">${r.score}</div>
+        <div class="parent-trend-bar-x">${i+1}회</div>
+      </div>`;
+    }).join('');
+    trendEl.innerHTML = bars;
+    // 추세 분석
+    if (history.length >= 2) {
+      const recent3 = history.slice(-3);
+      const trend = recent3[recent3.length-1].score - recent3[0].score;
+      if (trend > 5) msgEl.innerHTML = '📈 최근 점수가 <b style="color:var(--p1)">상승세</b>를 보이고 있어요!';
+      else if (trend < -5) msgEl.innerHTML = '⚠️ 최근 점수가 <b style="color:var(--danger)">하락세</b>입니다. 격려가 필요해요';
+      else msgEl.innerHTML = '점수가 <b>안정적</b>으로 유지되고 있어요';
+    } else {
+      msgEl.textContent = '계속 응시하면 추세 분석을 보실 수 있어요';
+    }
+  }
+
+  // 최근 활동
+  const actEl = document.getElementById('parent-activity-list');
+  const recent = history.slice(-5).reverse();
+  if (recent.length === 0) {
+    actEl.innerHTML = '<div class="parent-list-item"><div class="parent-list-ic">📭</div><div class="parent-list-text">아직 활동 내역이 없어요</div></div>';
+  } else {
+    actEl.innerHTML = recent.map(r => `
+      <div class="parent-list-item">
+        <div class="parent-list-ic">📝</div>
+        <div class="parent-list-text"><b>${r.round}회차 모의고사</b> ${r.score}점 응시 완료</div>
+        <div class="parent-list-time">${r.dateLabel || ''}</div>
+      </div>`).join('');
+  }
+
+  // 알림
+  const alertEl = document.getElementById('parent-alerts');
+  const alerts = [];
+  if (streak.days >= 7) alerts.push(`🔥 ${streak.days}일 연속 학습 중! 격려해주세요`);
+  if (history.length >= 3) {
+    const recent3 = history.slice(-3);
+    const allLow = recent3.every(r => r.score < 60);
+    if (allLow) alerts.push('⚠️ 최근 3회차 모두 60점 미만입니다. 약점 단원 보강이 필요해요');
+  }
+  const dday = getDday();
+  if (dday && dday.date) {
+    const diff = Math.round((new Date(dday.date) - new Date()) / 86400000);
+    if (diff > 0 && diff <= 7) alerts.push(`📅 시험까지 D-${diff}일! 마무리 학습 시기입니다`);
+  }
+  if (alerts.length === 0) {
+    alertEl.innerHTML = '<div style="text-align:center;padding:8px;color:var(--g5)">현재 특별한 알림이 없어요 😊</div>';
+  } else {
+    alertEl.innerHTML = alerts.map(a => `<div style="padding:7px 0;border-top:1px solid var(--g1)">${a}</div>`).join('');
+  }
+}
+
+// ========== 7. 결제 / 멤버십 ==========
+function getMembership(){
+  try { return JSON.parse(localStorage.getItem(MEMBER_KEY) || '{"active":false}'); }
+  catch(e) { return { active: false }; }
+}
+function setMembership(data){ localStorage.setItem(MEMBER_KEY, JSON.stringify(data)); }
+
+let selectedPlan = 'yearly';
+function selectPlan(plan, el){
+  selectedPlan = plan;
+  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+  if (el) el.classList.add('selected');
+}
+
+function goToCheckout(){
+  const plans = {
+    monthly: { name:'월 구독', price:9900 },
+    yearly: { name:'연 구독', price:77000 },
+    semester: { name:'6개월 패키지', price:39900 }
+  };
+  const p = plans[selectedPlan];
+  if (!confirm(`[${p.name}] ${p.price.toLocaleString()}원 결제하시겠습니까?\n\n※ 프로토타입에서는 실제 결제가 진행되지 않습니다.`)) return;
+  setMembership({
+    active: true,
+    plan: selectedPlan,
+    purchasedAt: Date.now(),
+    expiresAt: Date.now() + (selectedPlan === 'monthly' ? 30 : selectedPlan === 'semester' ? 180 : 365) * 86400000
+  });
+  addNotif('system', '✨ 프리미엄 가입 완료!', `${p.name} 멤버십이 활성화되었어요`);
+  alert('프리미엄 가입이 완료되었어요! 🎉');
+  updateMemberBanner();
+  goTo('s-dash');
+}
+
+function updateMemberBanner(){
+  const banner = document.getElementById('member-banner');
+  if (!banner) return;
+  const m = getMembership();
+  if (m.active) {
+    banner.classList.add('active');
+    banner.querySelector('.member-banner-ic').textContent = '👑';
+    banner.querySelector('.member-banner-ttl').textContent = '프리미엄 회원';
+    banner.querySelector('.member-banner-sub').textContent = '모든 기능을 무제한으로 이용 중이에요';
+  } else {
+    banner.classList.remove('active');
+  }
+}
+
+// ========== 8. 친구 순위 (가짜 데이터) ==========
+const DUMMY_FRIENDS = [
+  { name:'김지우', avatar:'김', meta:'1학년 3반 · 13회차', baseScore:88 },
+  { name:'박민서', avatar:'박', meta:'1학년 3반 · 11회차', baseScore:85 },
+  { name:'이서연', avatar:'이', meta:'1학년 3반 · 15회차', baseScore:82 },
+  { name:'최도윤', avatar:'최', meta:'1학년 3반 · 9회차', baseScore:78 },
+  { name:'정하윤', avatar:'정', meta:'1학년 3반 · 12회차', baseScore:75 },
+  { name:'강시우', avatar:'강', meta:'1학년 3반 · 7회차', baseScore:72 },
+  { name:'윤예준', avatar:'윤', meta:'1학년 3반 · 10회차', baseScore:68 },
+  { name:'장다은', avatar:'장', meta:'1학년 3반 · 6회차', baseScore:65 },
+];
+
+function renderFriendsRank(){
+  const history = getMockHistory().filter(r => r && r.score !== undefined);
+  const myAvg = history.length > 0 ? Math.round(history.reduce((a,b)=>a+b.score,0)/history.length) : 0;
+  const myMeta = history.length > 0 ? `1학년 3반 · ${history.length}회차` : '1학년 3반 · 응시 전';
+
+  const allUsers = [
+    ...DUMMY_FRIENDS.map(f => ({ ...f, score:f.baseScore, isMe:false })),
+    { name:'나', avatar:'나', meta:myMeta, score:myAvg, isMe:true }
+  ];
+  allUsers.sort((a, b) => b.score - a.score);
+
+  let myRank = allUsers.findIndex(u => u.isMe) + 1;
+  document.getElementById('my-rank').textContent = myRank > 0 ? myRank : '-';
+
+  const html = allUsers.map((u, i) => {
+    const rank = i + 1;
+    let rankCls = '';
+    if (rank === 1) rankCls = 'gold';
+    else if (rank === 2) rankCls = 'silver';
+    else if (rank === 3) rankCls = 'bronze';
+    return `<div class="rank-card ${u.isMe ? 'me' : ''}">
+      <div class="rank-num ${rankCls}">${rank}</div>
+      <div class="rank-avatar">${u.avatar}</div>
+      <div class="rank-body">
+        <div class="rank-name">${u.name}${u.isMe ? ' (나)' : ''}</div>
+        <div class="rank-meta">${u.meta}</div>
+      </div>
+      <div class="rank-score">${u.score || '-'}<small>점</small></div>
+    </div>`;
+  }).join('');
+  document.getElementById('rank-list').innerHTML = html;
+}
+
+// ========== 9. 커뮤니티 (가짜 데이터) ==========
+const DUMMY_SOLUTIONS = [
+  { author:'김지우', tag:'1등', problem:'2² × 3³ × 5의 약수의 개수는?',
+    body:`소인수분해된 형태에서 약수의 개수를 구하는 공식:\n각 지수에 1을 더해서 곱하기!\n\n2² → (2+1) = 3개\n3³ → (3+1) = 4개\n5¹ → (1+1) = 2개\n\n3 × 4 × 2 = 24개`,
+    likes:32, comments:5, time:Date.now()-3600000 },
+  { author:'박민서', tag:'2등', problem:'어떤 수의 2배에서 3을 빼면 11이 된다. 어떤 수는?',
+    body:`방정식 세우기가 핵심!\n어떤 수를 x라고 하면\n2x - 3 = 11\n2x = 14\nx = 7`,
+    likes:18, comments:3, time:Date.now()-7200000 },
+  { author:'이서연', tag:'3등', problem:'(-3) + 5 - (-2)을 계산하시오',
+    body:`괄호부터 풀어요!\n(-3) + 5 - (-2)\n= -3 + 5 + 2\n= 4`,
+    likes:12, comments:2, time:Date.now()-86400000 },
+  { author:'최도윤', tag:null, problem:'다음 중 소수가 아닌 것은?',
+    body:`소수: 1과 자기 자신만으로 나누어떨어지는 수\n15 = 3 × 5 → 합성수\n나머지는 모두 소수`,
+    likes:8, comments:1, time:Date.now()-172800000 },
+];
+
+function renderCommunity(){
+  const html = DUMMY_SOLUTIONS.map(s => `
+    <div class="sol-card">
+      <div class="sol-hd">
+        <div class="sol-avatar">${s.author[0]}</div>
+        <div class="sol-author">${s.author}${s.tag ? `<span class="sol-author-tag">${s.tag}</span>` : ''}</div>
+        <div class="sol-time">${formatTimeAgo(s.time)}</div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--p1);margin-bottom:6px">📝 ${s.problem}</div>
+      <div class="sol-body">${s.body}</div>
+      <div class="sol-actions">
+        <span class="sol-act"><span>❤️</span><span>${s.likes}</span></span>
+        <span class="sol-act"><span>💬</span><span>${s.comments}</span></span>
+        <span class="sol-act" style="margin-left:auto"><span>📤</span></span>
+      </div>
+    </div>`).join('');
+  document.getElementById('community-list').innerHTML = html;
+}
+
+// ========== 라우팅 갱신 ==========
+function goToOriginal(id){ goTo(id); }
+const originalGoTo = goTo;
+goTo = function(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='s-analyzing') doAnalysis();
+  if(id==='s-exam') renderExam();
+  if(id==='s-results') showResults();
+  if(id==='s-report') showReport();
+  if(id==='s-dash') renderDashboard();
+  if(id==='s-analy') renderAnalysisScreen();
+  if(id==='s-mock-list') renderMockList();
+  if(id==='s-badges') renderBadgesScreen();
+  if(id==='s-friends') renderFriendsRank();
+  if(id==='s-community') renderCommunity();
+  if(id==='s-past-result') renderPastResult();
+};
+
+// 알림 모달 열기 시 리스트 렌더
+const _origOpenModal = openModal;
+openModal = function(id){
+  document.getElementById(id).classList.add('show');
+  if (id === 'm-notif') renderNotifList();
+};
+
+// 더보기 아코디언 토글
+function toggleMoreSection(){
+  const sec = document.getElementById('more-section');
+  const btn = document.getElementById('more-toggle-btn');
+  if (!sec || !btn) return;
+  sec.classList.toggle('expanded');
+  btn.classList.toggle('expanded');
+}
+
+// 대시보드 렌더 시 D-Day, Streak, 배지 등도 함께 갱신 (학부모 모드 토글 제거됨)
+const _origRenderDashboard = renderDashboard;
+renderDashboard = function(){
+  _origRenderDashboard();
+  renderDday();
+  renderStreak();
+  updateBadgeSummary();
+  updateMemberBanner();
+  renderNotifBadge();
+  // 매번 배지 체크
+  checkAndAwardBadges();
+};
+
+// 학습 활동 시 streak 기록
+const _origSubmitExam = submitExam;
+submitExam = function(){
+  recordStudy();
+  _origSubmitExam();
+};
+
+// 초기화 시 테마 적용 + 배지 체크
+window.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  checkAndAwardBadges();
+  // D-Day 입력란 기본값: 30일 후
+  const ddayInput = document.getElementById('dday-date-input');
+  if (ddayInput) {
+    const cur = getDday();
+    if (cur && cur.date) {
+      ddayInput.value = cur.date;
+      const nameInput = document.getElementById('dday-name-input');
+      if (nameInput) nameInput.value = cur.name || '';
+    } else {
+      const future = new Date(); future.setDate(future.getDate() + 30);
+      ddayInput.value = future.toISOString().split('T')[0];
+    }
+  }
+  // 첫 방문이면 환영 알림
+  if (getNotifs().length === 0) {
+    addNotif('system', '🎉 매쓰홀릭에 오신 것을 환영해요!', '시험지를 업로드하고 AI 모의고사를 시작해보세요');
+    addNotif('tip', '💡 학습 팁', '매일 학습하면 연속 학습 배지를 받을 수 있어요!');
+  }
+});
+
 </script>
 
 </body>
