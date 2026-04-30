@@ -737,6 +737,111 @@ input:focus,select:focus{border-color:var(--p2)}
 .mtx-row-4:last-child{border-bottom:none}
 .mtx-row-4 .mtx-name{padding:9px 10px;font-size:11.5px;color:var(--g9);display:flex;align-items:center;line-height:1.35}
 .mtx-row-4 .mtx-cells{padding:7px 4px;display:flex;align-items:center;justify-content:center;gap:4px;border-left:1px solid var(--g1);flex-wrap:wrap}
+
+/* ========= 연습장 바텀시트 ========= */
+/* 각 문제카드의 연습장 버튼 */
+.scratch-q-btn{
+  display:inline-flex;align-items:center;gap:4px;
+  margin-left:auto;padding:4px 10px;
+  background:var(--p5);border:1.5px solid var(--p2);
+  border-radius:16px;font-size:11px;font-weight:700;
+  color:var(--p1);cursor:pointer;white-space:nowrap;
+  transition:background .12s;flex-shrink:0;
+}
+.scratch-q-btn:hover{background:var(--p3);color:#fff;border-color:var(--p3)}
+
+/* 딤 배경 */
+.scratch-dim{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.35);z-index:300;
+  animation:dimIn .2s ease;
+}
+.scratch-dim.show{display:block}
+@keyframes dimIn{from{opacity:0}to{opacity:1}}
+
+/* 바텀시트 패널 */
+.scratch-sheet{
+  position:fixed;bottom:0;left:50%;
+  transform:translateX(-50%) translateY(100%);
+  width:100%;max-width:480px;
+  background:var(--g0);border-radius:20px 20px 0 0;
+  box-shadow:0 -8px 32px rgba(0,0,0,.22);
+  z-index:301;display:flex;flex-direction:column;
+  height:72vh;max-height:580px;min-height:340px;
+  transition:transform .32s cubic-bezier(.32,1,.56,1);
+}
+.scratch-sheet.open{transform:translateX(-50%) translateY(0)}
+
+/* 드래그 핸들 */
+.scratch-sheet-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:var(--g3);margin:10px auto 0;flex-shrink:0;
+}
+
+/* 문제 표시 영역 */
+.scratch-q-display{
+  margin:10px 14px 0;padding:10px 12px;
+  background:var(--g1);border-radius:10px;
+  border-left:3px solid var(--p2);flex-shrink:0;
+  max-height:90px;overflow-y:auto;
+}
+.scratch-q-display-num{
+  font-size:11px;font-weight:700;color:var(--p1);margin-bottom:4px;
+}
+.scratch-q-display-text{
+  font-size:13px;color:var(--g9);line-height:1.55;
+  display:-webkit-box;-webkit-line-clamp:3;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+
+/* 툴바 */
+.scratch-toolbar{
+  display:flex;align-items:center;gap:5px;
+  padding:7px 12px;border-bottom:1px solid var(--g1);
+  border-top:1px solid var(--g1);margin-top:10px;
+  overflow-x:auto;flex-shrink:0;
+}
+.scratch-tool{
+  width:32px;height:32px;border-radius:8px;
+  border:1.5px solid transparent;background:var(--g0);
+  cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:15px;flex-shrink:0;
+  transition:all .12s;
+}
+.scratch-tool:hover{background:var(--p5);border-color:var(--p2)}
+.scratch-tool.active{background:var(--p5);border-color:var(--p2)}
+.scratch-sep{width:1px;height:22px;background:var(--g3);flex-shrink:0;margin:0 2px}
+.pen-size-btn{border-radius:50%;background:var(--g9);cursor:pointer;flex-shrink:0;transition:box-shadow .12s}
+.pen-size-btn.active{box-shadow:0 0 0 2.5px var(--g0),0 0 0 4px var(--p2)}
+.pen-color-btn{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;flex-shrink:0;transition:all .12s}
+.pen-color-btn.active{border-color:var(--g9);box-shadow:0 0 0 1px var(--g9)}
+
+/* 닫기 버튼 */
+.scratch-close-btn{
+  position:absolute;top:14px;right:14px;
+  width:30px;height:30px;border-radius:50%;
+  border:none;background:var(--g1);
+  font-size:16px;cursor:pointer;color:var(--g7);
+  display:flex;align-items:center;justify-content:center;
+  z-index:1;
+}
+.scratch-close-btn:hover{background:var(--g3)}
+
+/* 캔버스 영역 */
+.scratch-canvas-wrap{
+  flex:1;position:relative;background:#FEFFFE;
+  overflow:hidden;touch-action:none;min-height:0;
+}
+.scratch-canvas{
+  display:block;width:100%;height:100%;
+  cursor:crosshair;touch-action:none;
+}
+.scratch-hint{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  pointer-events:none;gap:6px;
+}
+.scratch-hint.hidden{display:none}
 </style>
 
 <div id="app">
@@ -1241,7 +1346,7 @@ input:focus,select:focus{border-color:var(--p2)}
       <span class="timer-ic">⏱</span>
       <span class="timer-txt" id="timer-txt">30:00</span>
     </div>
-    <div class="timer-prog" id="timer-prog">중간고사 예측 · 100점</div>
+    <div class="timer-prog" id="timer-prog" style="flex:1;text-align:center">중간고사 예측 · 100점</div>
   </div>
   <div class="steps"><div class="stp done"></div><div class="stp done"></div><div class="stp done"></div><div class="stp cur"></div><div class="stp"></div></div>
   <div class="exam-body" id="exam-body"></div>
@@ -1348,6 +1453,30 @@ input:focus,select:focus{border-color:var(--p2)}
 </div>
 
 <!-- ========== MODALS ========== -->
+
+<!-- 연습장 딤 배경 -->
+<div class="scratch-dim" id="scratch-dim" onclick="closeScratchSheet()"></div>
+
+<!-- 연습장 바텀시트 -->
+<div class="scratch-sheet" id="scratch-sheet">
+  <div class="scratch-sheet-handle"></div>
+  <button class="scratch-close-btn" onclick="closeScratchSheet()">✕</button>
+  <!-- 문제 표시 영역 (열 때마다 동적으로 채워짐) -->
+  <div class="scratch-q-display" id="scratch-q-display">
+    <div class="scratch-q-display-num" id="scratch-q-num"></div>
+    <div class="scratch-q-display-text" id="scratch-q-text"></div>
+  </div>
+  <!-- 툴바 -->
+  <div class="scratch-toolbar" id="scratch-toolbar"></div>
+  <!-- 캔버스 -->
+  <div class="scratch-canvas-wrap" id="scratch-canvas-wrap">
+    <canvas class="scratch-canvas" id="scratch-canvas"></canvas>
+    <div class="scratch-hint" id="scratch-hint">
+      <span style="font-size:32px">✏️</span>
+      <span style="font-size:13px;color:var(--g5);font-weight:600">풀이를 자유롭게 적어보세요</span>
+    </div>
+  </div>
+</div>
 
 <!-- 우리 학교 기출 없음 모달 -->
 <div class="modal-bg" id="m-no-db">
@@ -2089,6 +2218,7 @@ function renderPastExamBody(){
         <span style="font-size:12px;font-weight:600;color:var(--p1)">우리 학교 기출</span>
         <span class="qtag">${q.type === 'mc' ? '객관식' : '주관식'}</span>
         <span class="qpts">${q.points}점</span>
+        <button class="scratch-q-btn" onclick="openScratchSheet(${q.num},'${q.text.replace(/'/g,'\\\'').replace(/"/g,'&quot;')}')">✏️ 연습장</button>
       </div>
       <div class="qtext">${q.text}</div>
       ${inputHtml}
@@ -3072,7 +3202,13 @@ function chk(q,ua){
 function renderExam(){
   document.getElementById('exam-body').innerHTML=QS.map((q,i)=>`
     <div class="qcard">
-      <div class="q-head"><div class="qnum">${q.id}</div><span style="font-size:12px;font-weight:600;color:var(--p1)">${q.unit}</span><span class="qtag">${q.type==='mc'?'객관식':'주관식'}</span><span class="qpts">${q.pts}점</span></div>
+      <div class="q-head">
+        <div class="qnum">${q.id}</div>
+        <span style="font-size:12px;font-weight:600;color:var(--p1)">${q.unit}</span>
+        <span class="qtag">${q.type==='mc'?'객관식':'주관식'}</span>
+        <span class="qpts">${q.pts}점</span>
+        <button class="scratch-q-btn" onclick="openScratchSheet(${q.id},'${q.text.replace(/'/g,'\\\'').replace(/"/g,'&quot;')}')">✏️ 연습장</button>
+      </div>
       <div class="qtext">${q.text}</div>
       ${q.type==='mc'
         ?`<div class="opts" id="opts${i}">${q.opts.map((o,j)=>`<div class="opt ${UA[i]===j?'sel':''}" onclick="pick(${i},${j})" id="o${i}_${j}"><div class="onum" id="on${i}_${j}">${NN[j]}</div><span>${o}</span></div>`).join('')}</div>`
@@ -3975,6 +4111,164 @@ window.addEventListener('DOMContentLoaded', () => {
     addNotif('tip', '💡 학습 팁', '매일 학습하면 연속 학습 배지를 받을 수 있어요!');
   }
 });
+
+// ==========================================
+// 연습장 바텀시트
+// 각 문제의 ✏️ 연습장 버튼 → 문제 텍스트가 상단에 고정된 바텀시트 오픈
+// 문제 리스트는 뒤에 그대로 유지 (절대 가리지 않음)
+// ==========================================
+const SCRATCH_COLORS = ['#1A1A1A','#E53E3E','#3182CE','#38A169','#D69E2E','#9F7AEA'];
+const SCRATCH_SIZES  = [2, 4, 8, 14];
+
+const scratchSt = {
+  tool: 'pen', color: '#1A1A1A', size: 4,
+  drawing: false, lastX: 0, lastY: 0,
+  canvasInited: false, isEmpty: true,
+};
+
+function openScratchSheet(qNum, qText){
+  // 문제 표시
+  document.getElementById('scratch-q-num').textContent = qNum + '번 문제';
+  document.getElementById('scratch-q-text').textContent = qText;
+
+  // 시트 + 딤 열기
+  document.getElementById('scratch-dim').classList.add('show');
+  document.getElementById('scratch-sheet').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // 툴바 그리기
+  buildScratchToolbar();
+
+  // 캔버스 초기화 (처음 열 때만)
+  setTimeout(() => {
+    initScratchCanvas();
+  }, 60);
+}
+
+function closeScratchSheet(){
+  document.getElementById('scratch-dim').classList.remove('show');
+  document.getElementById('scratch-sheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function buildScratchToolbar(){
+  const st = scratchSt;
+  const tb = document.getElementById('scratch-toolbar');
+  if(!tb) return;
+
+  const sizeDots = SCRATCH_SIZES.map(s =>
+    `<button class="pen-size-btn ${st.size===s?'active':''}"
+      style="width:${s+6}px;height:${s+6}px;background:${st.tool==='eraser'?'#bbb':st.color}"
+      onclick="setScratchSize(${s})"></button>`
+  ).join('');
+
+  const colorDots = SCRATCH_COLORS.map(c =>
+    `<button class="pen-color-btn ${st.color===c?'active':''}"
+      style="background:${c}"
+      onclick="setScratchColor('${c}')"></button>`
+  ).join('');
+
+  tb.innerHTML = `
+    <button class="scratch-tool ${st.tool==='pen'?'active':''}" onclick="setScratchTool('pen')" title="펜">✏️</button>
+    <button class="scratch-tool ${st.tool==='eraser'?'active':''}" onclick="setScratchTool('eraser')" title="지우개">🩹</button>
+    <div class="scratch-sep"></div>
+    <div style="display:flex;align-items:center;gap:5px">${sizeDots}</div>
+    <div class="scratch-sep"></div>
+    <div style="display:flex;align-items:center;gap:4px">${colorDots}</div>
+    <div style="margin-left:auto"></div>
+    <button class="scratch-tool" onclick="clearScratch()" title="전체 지우기">🗑️</button>`;
+}
+
+function initScratchCanvas(){
+  const canvas = document.getElementById('scratch-canvas');
+  const wrap   = document.getElementById('scratch-canvas-wrap');
+  if(!canvas || !wrap) return;
+
+  const w = wrap.clientWidth;
+  const h = wrap.clientHeight || 260;
+  const dpr = window.devicePixelRatio || 1;
+
+  if(!scratchSt.canvasInited){
+    canvas.width  = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width  = w + 'px';
+    canvas.style.height = h + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.fillStyle = '#FEFFFE';
+    ctx.fillRect(0, 0, w, h);
+    scratchSt.canvasInited = true;
+    bindScratchEvents(canvas);
+  }
+}
+
+function bindScratchEvents(canvas){
+  const dpr = window.devicePixelRatio || 1;
+
+  function getPos(e){
+    const r = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: (src.clientX - r.left), y: (src.clientY - r.top) };
+  }
+
+  function startDraw(e){
+    e.preventDefault();
+    scratchSt.drawing = true;
+    const p = getPos(e);
+    scratchSt.lastX = p.x; scratchSt.lastY = p.y;
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    const r = scratchSt.tool==='eraser' ? scratchSt.size*4 : scratchSt.size/2;
+    ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+    ctx.fillStyle = scratchSt.tool==='eraser' ? '#FEFFFE' : scratchSt.color;
+    ctx.fill();
+    if(scratchSt.isEmpty){
+      scratchSt.isEmpty = false;
+      document.getElementById('scratch-hint').classList.add('hidden');
+    }
+  }
+
+  function onDraw(e){
+    e.preventDefault();
+    if(!scratchSt.drawing) return;
+    const p = getPos(e);
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(scratchSt.lastX, scratchSt.lastY);
+    ctx.lineTo(p.x, p.y);
+    ctx.strokeStyle = scratchSt.tool==='eraser' ? '#FEFFFE' : scratchSt.color;
+    ctx.lineWidth   = scratchSt.tool==='eraser' ? scratchSt.size*7 : scratchSt.size;
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.stroke();
+    scratchSt.lastX = p.x; scratchSt.lastY = p.y;
+  }
+
+  function endDraw(){ scratchSt.drawing = false; }
+
+  canvas.addEventListener('mousedown',  startDraw, {passive:false});
+  canvas.addEventListener('mousemove',  onDraw,    {passive:false});
+  canvas.addEventListener('mouseup',    endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
+  canvas.addEventListener('touchstart', startDraw, {passive:false});
+  canvas.addEventListener('touchmove',  onDraw,    {passive:false});
+  canvas.addEventListener('touchend',   endDraw);
+}
+
+function clearScratch(){
+  const canvas = document.getElementById('scratch-canvas');
+  const wrap   = document.getElementById('scratch-canvas-wrap');
+  if(!canvas || !wrap) return;
+  const ctx = canvas.getContext('2d');
+  const w = wrap.clientWidth, h = wrap.clientHeight || 260;
+  ctx.fillStyle = '#FEFFFE';
+  ctx.fillRect(0, 0, w, h);
+  scratchSt.isEmpty = true;
+  document.getElementById('scratch-hint').classList.remove('hidden');
+}
+
+function setScratchTool(tool){ scratchSt.tool = tool; buildScratchToolbar(); }
+function setScratchColor(color){ scratchSt.color = color; scratchSt.tool = 'pen'; buildScratchToolbar(); }
+function setScratchSize(size){ scratchSt.size = size; buildScratchToolbar(); }
 
 </script>
 
