@@ -1674,20 +1674,23 @@ function goToReportFromDash(){
 }
 
 // ========== 내 시험지 분석 ==========
+// "우리 학교 시험지 분석 보기"는 항상 학교 DB 기반 분석(출제 경향 + 기출 문제)을 먼저 보여줌
 async function renderAnalysisScreen(){
+  const imgBox = document.getElementById('analy-img-box');
+  const list = document.getElementById('analy-list');
+  // 이미지 박스는 학교 DB 분석 화면에서는 사용 안 함
+  imgBox.style.display = 'none';
+  // 항상 학교 DB 기반 분석 화면(Image 2) 표시
+  renderSchoolBasedAnalysis(list);
+}
+
+// 업로드된 시험지 분석 결과를 별도로 표시할 때 사용 (기출 풀이 결과 화면 등에서 호출)
+async function renderUploadedPaperAnalysis(){
   const cached = getPaperAnalysis();
   const imgBox = document.getElementById('analy-img-box');
   const imagesArr = (cached && cached.images) ? cached.images : (uploadedImageDataUrl ? [uploadedImageDataUrl] : []);
   const list = document.getElementById('analy-list');
 
-  // 시험지 미업로드 시: 학교 정보 기반 출제 경향 분석 화면
-  if (imagesArr.length === 0 && (!cached || !cached.questions || !cached.questions.length)) {
-    imgBox.style.display = 'none';
-    renderSchoolBasedAnalysis(list);
-    return;
-  }
-
-  // 시험지 업로드된 경우: 기존 흐름
   imgBox.style.display = '';
   if (imagesArr.length > 0) {
     const imgsHtml = imagesArr.map((src, i) =>
@@ -1703,13 +1706,11 @@ async function renderAnalysisScreen(){
     imgBox.style.display = 'none';
   }
 
-  // 이미 분석된 결과가 있으면 바로 표시
   if (cached && cached.questions && cached.questions.length) {
     renderAnalysisQuestions(cached.questions);
     return;
   }
 
-  // 분석 진행
   list.innerHTML = `
     <div class="analy-loading">
       <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
